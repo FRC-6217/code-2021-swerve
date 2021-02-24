@@ -59,65 +59,114 @@ public class ArmLift extends SubsystemBase {
   }
 
   //sensor methods
-  public boolean getUpLeftLimit() {
+  private boolean getUpLeftLimit() {
     return upLeftLimit.get();
   }
 
-  public boolean getUpRightLimit() {
+  private boolean getUpRightLimit() {
     return upRightLimit.get();
   }
 
-  public boolean getDownLeftLimit() {
+  private boolean getDownLeftLimit() {
     return downLeftLimit.get();
   }
 
-  public boolean getDownRightLimit() {
+  private boolean getDownRightLimit() {
     return downRightLimit.get();
   }
 
   // motor control methods
 
   // up motors
-  public void upLeftMotor() {
+  private void upLeftMotor() {
     left.set(ARM_LIFT_CONSTANTS.SPEED);
   }
 
-  public void upRightMotor() {
+  private void upRightMotor() {
     right.set(ARM_LIFT_CONSTANTS.SPEED);
   }
 
   // down motors
-  public void downLeftMotor() {
+  private void downLeftMotor() {
     left.set(-ARM_LIFT_CONSTANTS.SPEED);
   }
 
-  public void downRightMotor() {
+  private void downRightMotor() {
     right.set(-ARM_LIFT_CONSTANTS.SPEED);
   }
 
   // off motors
-  public void offLeftMotor() {
+  private void offLeftMotor() {
     left.set(0);
   }
   
-  public void offRightMotor() {
+  private void offRightMotor() {
     right.set(0);
   }
   
   // calling previous functions
-  public void upMotor() {
-    upLeftMotor();
-    upRightMotor();
-  }
-
-  public void downMotor() {
-    downLeftMotor();
-    downRightMotor();
-  }
-  
   public void offMotor() {
     offLeftMotor();
     offRightMotor();
+  }
+
+
+  //This is the limit switch for the arm
+  private void upLeftLimited() {
+    if(!getUpLeftLimit()) {
+      upLeftMotor();
+    }
+
+    else {
+      offLeftMotor();
+    }
+  }
+
+
+  private void upRightLimited() {
+    if(!getUpRightLimit()) {
+      upRightMotor();
+    }
+
+    else {
+      offRightMotor();
+    }
+  }
+
+
+  private void downLeftLimited() {
+    if(!getDownLeftLimit()) {
+      downLeftMotor();
+    }
+
+    else {
+      offLeftMotor();
+    }
+  }
+
+
+  private void downRightLimited() {
+    if(!getDownRightLimit()) {
+      downRightMotor();
+    }
+
+    else {
+      offRightMotor();
+    }
+  }
+
+  public boolean upMotorLimited() {
+    upLeftLimited();
+    upRightLimited();
+
+    return getUpLeftLimit() && getUpRightLimit();
+  }
+
+  public boolean downMotorLimited() {
+    downLeftLimited();
+    downRightLimited();
+
+    return getDownLeftLimit() && getDownRightLimit();
   }
 
   @Override

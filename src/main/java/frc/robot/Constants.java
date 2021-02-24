@@ -54,12 +54,17 @@ public final class Constants {
         public static final double SPEED = .4;
         public static final boolean IS_NEGATED = true;
     }
-    public class ARM_LIFT_CONSTANTS{
+    public static class ARM_LIFT_CONSTANTS{
         public static final int MOTOR_CONTROLLER_ID_LEFT = 28;
         public static final int MOTOR_CONTROLLER_ID_RIGHT = 30;
         public static final double SPEED = .5;
         public static final boolean IS_NEGATED_LEFT = false;
         public static final boolean IS_NEGATED_RIGHT = false;
+        public static enum STATE {
+            UP,
+            DOWN,
+            OFF  
+          };
     }
     public class BALL_SHOOTER_CONSTANTS{
         public static final int MOTOR_CONTROLLER_ID_TOP = 25;
@@ -117,13 +122,7 @@ public final class Constants {
         BOTH
       };
 
-    public static enum STATE {
-        UP,
-        DOWN,
-        FORWARDS,
-        REVERSE,
-        OFF  
-      };
+    
 }
 
 
