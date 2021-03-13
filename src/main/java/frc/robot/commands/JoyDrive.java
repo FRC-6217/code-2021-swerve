@@ -7,30 +7,30 @@
 
 package frc.robot.commands;
 
+import java.io.File;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.driveTrain;
+import frc.robot.subsystems.DriveTrain;
 
-public class JoyDriveCommand extends CommandBase {
-  private final driveTrain driveTrain;
+public class JoyDrive extends CommandBase {
+  private final DriveTrain driveTrain;
 
-  private Joystick joy;
+  private final Joystick joy;
+  private double governer;
   private double x;
   private double y;
   private double z;
   private boolean gyroButtonForward;
   private boolean gyroButtonBackward;
-  private double governer;
+  private boolean fieldRelative = false;
   
   private boolean isReversed;
-  private double x1;
-  private double y1;
-  private int direction = 1;
   
   /**
    * Creates a new JoyDrive.
    */
-  public JoyDriveCommand(driveTrain train, Joystick joy) {
+  public JoyDrive(DriveTrain train, Joystick joy) {
     addRequirements(train);
 
     driveTrain = train;
@@ -45,34 +45,36 @@ public class JoyDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    y = joy.getRawAxis(0);
-    x = joy.getRawAxis(1);
-    z = joy.getRawAxis(2);
-    // gyroButtonForward = joy.getRawButton(5);
-    // gyroButtonBackward = joy.getRawButton(6);        
-    governer = joy.getRawAxis(3);
+    governer = Math.abs(1 - joy.getRawAxis(3));
 
-    // if(gyroButtonForward){
-    //     driveTrain.resetGyro();
-    //     isReversed = false;
-    // }
-    // else if(gyroButtonBackward){
-    //     driveTrain.resetGyro();
-    //     isReversed = true;
-    // }
+    y = (Math.abs(x) > .3 ? joy.getRawAxis(0) * governer : 0.0);
+    x = (Math.abs(y) > .3 ? joy.getRawAxis(1) * governer : 0.0);
+    z = (Math.abs(z) > .3 ? joy.getRawAxis(2) * governer : 0.0);
     
-    x = (Math.abs(x) > .3 ? x : 0.0);
-    y = (Math.abs(y) > .3 ? y : 0.0);
-    z = (Math.abs(z) > .3 ? z : 0.0);
+    gyroButtonForward = joy.getRawButton(5);
+    gyroButtonBackward = joy.getRawButton(6);        
 
-    x1 = driveTrain.TransformX(x, y, isReversed);
-    y1 = driveTrain.TransformY(x, y, isReversed);
+    if(gyroButtonForward){
+        driveTrain.zeroHeading();
+        isReversed = false;
+    }
+    else if(gyroButtonBackward){
+        driveTrain.zeroHeading();
+        isReversed = true;
+    }
+
+    if(joy.getRawButton(7) && !fieldRelative){
+      fieldRelative = true;
+    }
+    else if(joy.getRawButton(7) && fieldRelative){
+      fieldRelative = false;
+    }
 
     if(isReversed){
-      driveTrain.Drive (y, -x, -z, Math.abs(governer-1));
+      driveTrain.drive(-y, -y, z, fieldRelative);
     }
     else{
-      driveTrain.Drive (-y, x, -z, Math.abs(governer-1));
+      driveTrain.drive(x, y, z, fieldRelative);
     }
 
     
@@ -83,7 +85,7 @@ public class JoyDriveCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    driveTrain.Drive(0, 0, 0, 0);
+    driveTrain.drive(0, 0, 0, false);
   }
 
   // Returns true when the command should end.

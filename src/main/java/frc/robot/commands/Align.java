@@ -15,12 +15,12 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants.ALIGN_COMMAND_CONSTANTS;
 import frc.robot.libraries.Angle;
 import frc.robot.libraries.Distance;
-import frc.robot.subsystems.driveTrain;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.LimeLight;
 
 public class Align extends CommandBase {
 
-  private final driveTrain driveTrain;
+  private final DriveTrain driveTrain;
   private LimeLight light;
   private Joystick joy;
   private double y;
@@ -51,7 +51,7 @@ public class Align extends CommandBase {
   private boolean atSetZ;
   private boolean atSetY;
   
-  public Align(driveTrain train, Joystick joy, Angle angle, Distance distance) {
+  public Align(DriveTrain train, Joystick joy, Angle angle, Distance distance) {
     addRequirements(train);
 
     driveTrain = train;
@@ -70,7 +70,7 @@ public class Align extends CommandBase {
     
   }
 
-  public Align(driveTrain train, Joystick joy, Angle angle) {
+  public Align(DriveTrain train, Joystick joy, Angle angle) {
     addRequirements(train);
 
     driveTrain = train;
@@ -84,7 +84,7 @@ public class Align extends CommandBase {
     pidZ.setTolerance(10, 10);
   }
 
-  public Align(driveTrain train, LimeLight light, Joystick joy, Distance distance) {
+  public Align(DriveTrain train, LimeLight light, Joystick joy, Distance distance) {
     addRequirements(train);
 
     this.light = light;
@@ -149,11 +149,11 @@ public class Align extends CommandBase {
         SmartDashboard.putNumber("ErrorZ", errorZ);
         outputZ = MathUtil.clamp(errorZ, -1, 1);
 
-        driveTrain.Drive(x, -y, outputZ, 0.5);
+        // driveTrain.drive(x, -y, outputZ, 0.5);
         //TODO set max speed constant
       }
       else{
-        driveTrain.Drive(x, -y, z, 0.5);
+        // driveTrain.Drive(x, -y, z, 0.5);
       }
     }
   
@@ -179,11 +179,11 @@ public class Align extends CommandBase {
           atSetY = true;
         }
 
-        driveTrain.Drive(x, -outputY, -z, 0.1);
+        // driveTrain.Drive(x, -outputY, -z, 0.1);
         //TODO set max speed constant
       }
       else{
-        driveTrain.Drive(x, -y, -z, 0.5);
+        // driveTrain.Drive(x, -y, -z, 0.5);
       }
     }
 
@@ -209,11 +209,11 @@ public class Align extends CommandBase {
         SmartDashboard.putNumber("ErrorY", errorY);
         outputY = MathUtil.clamp(errorY, -1, 1);
 
-        driveTrain.Drive(-x, outputY, outputZ, 0.5);
+        // driveTrain.Drive(-x, outputY, outputZ, 0.5);
         //TODO set max speed constant
       }
       else{
-        driveTrain.Drive(-y, x, z, 0.5);
+        // driveTrain.Drive(-y, x, z, 0.5);
       }
 
     }
@@ -269,7 +269,7 @@ public class Align extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    driveTrain.Drive(0, 0, 0, 0);
+    // driveTrain.Drive(0, 0, 0, 0);
     // light.limeNotRequired();
   }
 

@@ -9,6 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -23,18 +25,45 @@ public final class Constants {
     public static final int DRIVESTICK_PORT = 0;
     public static final int XBOX_PORT = 1;
 
-    public class DRIVE_TRAIN_CONSTANTS{
+    public static final class DRIVE_TRAIN_CONSTANTS{
+        public static final int BR_ANGLE_CURRENT_CHANNEL = 0;
+        public static final int BL_ANGLE_CURRENT_CHANNEL = 0;
+        public static final int FR_ANGLE_CURRENT_CHANNEL = 0;
+        public static final int FL_ANGLE_CURRENT_CHANNEL = 0;
+        public static final int BR_ANGLE_MOTOR_ID = 53;
+        public static final int BL_ANGLE_MOTOR_ID = 45;
+        public static final int FR_ANGLE_MOTOR_ID = 46;
+        public static final int FL_ANGLE_MOTOR_ID = 41;
+        public static final int BR_DRIVE_CURRENT_CHANNEL = 0;
+        public static final int BL_DRIVE_CURRENT_CHANNEL = 0;
+        public static final int FR_DRIVE_CURRENT_CHANNEL = 0;
+        public static final int FL_DRIVE_CURRENT_CHANNEL = 0;
+        public static final int BR_DRIVE_MOTOR_ID = 22;
+        public static final int BL_DRIVE_MOTOR_ID = 23;
+        public static final int FR_DRIVE_MOTOR_ID = 21;
+        public static final int FL_DRIVE_MOTOR_ID = 24;
+
         public static final double LENGTH = (21.5 * 0.0254); //front to back
         public static final double WIDTH = (24.5 * 0.0254); //Left to Right
-        
-        public static final int BR_SPEED_MOTOR = 22;
-        public static final int BL_SPEED_MOTOR = 23;
-        public static final int FR_SPEED_MOTOR = 21;
-        public static final int FL_SPEED_MOTOR = 24;
-        public static final int BR_ANGLE_MOTOR = 53;
-        public static final int BL_ANGLE_MOTOR = 45;
-        public static final int FR_ANGLE_MOTOR = 46;
-        public static final int FL_ANGLE_MOTOR = 41;
+
+        public static final SwerveDriveKinematics DRIVE_KINEMATICS =
+            new SwerveDriveKinematics(
+                new Translation2d(LENGTH / 2, WIDTH / 2),
+                new Translation2d(LENGTH / 2, -WIDTH / 2),
+                new Translation2d(-LENGTH / 2, WIDTH / 2),
+                new Translation2d(-LENGTH / 2, -WIDTH / 2));
+
+        public static final boolean GYRO_REVERSED = false;
+
+        public static final boolean DEBUG = false;
+        public static final boolean ENABLE_TUNING = false;
+
+        public static enum MODULE {
+            FRONT_LEFT,
+            FRONT_RIGHT,
+            BACK_LEFT,
+            BACK_RIGHT
+        };
     }
     public class WHEEL_DRIVE_CONSTANTS{
         public static final double MIN_ANGLE_REQUEST = -1;

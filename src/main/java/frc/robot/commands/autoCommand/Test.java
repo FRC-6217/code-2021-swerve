@@ -8,9 +8,9 @@
 package frc.robot.commands.autoCommand;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.JoyDriveCommand;
+// import frc.robot.commands.JoyDriveCommand;
 import frc.robot.libraries.FakeJoystick;
-import frc.robot.subsystems.driveTrain;
+import frc.robot.subsystems.DriveTrain;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -20,9 +20,9 @@ public class Test extends SequentialCommandGroup {
    * Creates a new Test.
    */
   
-  public Test(driveTrain train, FakeJoystick joy) {
+  public Test(DriveTrain train, FakeJoystick joy) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new JoyDriveCommand(train, joy));
+    // super(new JoyDriveCommand(train, joy));
   }
 }
