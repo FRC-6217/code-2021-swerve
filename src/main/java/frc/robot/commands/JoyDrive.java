@@ -7,93 +7,106 @@
 
 package frc.robot.commands;
 
-import java.io.File;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.libraries.ButtonDebouncer;
 import frc.robot.subsystems.DriveTrain;
 
 public class JoyDrive extends CommandBase {
   private final DriveTrain driveTrain;
-
   private final Joystick joy;
-  private double governer;
-  private double x;
-  private double y;
-  private double z;
-  private boolean gyroButtonForward;
-  private boolean gyroButtonBackward;
-  private boolean fieldRelative = false;
-  
-  private boolean isReversed;
+
+  // Create Button Debouncer objects
+  private ButtonDebouncer reverseHeading;
+  private ButtonDebouncer invertFieldRelative;
+
+  // Create class variables to hold robot control parameters
+  private boolean isReversed = false; // Reverses robot direction when set to true
+  private boolean fieldRelative = false; // Sets robot to field relative drive when set to true
   
   /**
-   * Creates a new JoyDrive.
+   * Create a new JoyDrive
+   * 
+   * @param driveTrain The DriveTrain subsystem object of the scheduler
+   * @param joy The drive joystick object
    */
-  public JoyDrive(DriveTrain train, Joystick joy) {
-    addRequirements(train);
+  public JoyDrive(DriveTrain driveTrain, Joystick joy) {
+    // Add the driveTrain subsystem object to the requirements of the JoyDrive Command
+    addRequirements(driveTrain);
 
-    driveTrain = train;
+    // Pass parameters to class variables
+    this.driveTrain = driveTrain;
     this.joy = joy;
+
+    // Initialize button debouncer objects
+    reverseHeading = new ButtonDebouncer(joy, 5);
+    invertFieldRelative = new ButtonDebouncer(joy, 6);
   }
 
-  // Called when the command is initially scheduled.
+  /**
+   * Called when the command is initially scheduled.
+   */
   @Override
   public void initialize() {
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * Called every time the scheduler runs while the command is scheduled.
+   */
   @Override
   public void execute() {
-    governer = Math.abs(1 - joy.getRawAxis(3));
+    // Fetch the speed governor from the drive joystick -- Adjust axis value from 1 to 0 into 0 to 1
+    double governor = Math.abs(1 - joy.getRawAxis(3));
 
-    y = (Math.abs(x) > .3 ? joy.getRawAxis(0) * governer : 0.0);
-    x = (Math.abs(y) > .3 ? joy.getRawAxis(1) * governer : 0.0);
-    z = (Math.abs(z) > .3 ? joy.getRawAxis(2) * governer : 0.0);
+    // Creates a deadzone of 30% and sets x, y, and z values to the governed joystick axes
+    double x = (Math.abs(joy.getRawAxis(1)) > .3 ? joy.getRawAxis(1) * governor : 0.0);
+    double y = (Math.abs(joy.getRawAxis(0)) > .3 ? joy.getRawAxis(0) * governor : 0.0);
+    double z = (Math.abs(joy.getRawAxis(2)) > .3 ? joy.getRawAxis(2) * governor : 0.0);  
     
-    gyroButtonForward = joy.getRawButton(5);
-    gyroButtonBackward = joy.getRawButton(6);        
 
-    if(gyroButtonForward){
-        driveTrain.zeroHeading();
-        isReversed = false;
-    }
-    else if(gyroButtonBackward){
-        driveTrain.zeroHeading();
-        isReversed = true;
+    // Control heading reversal with debounced joystick button
+    if(reverseHeading.get()){
+        isReversed = !isReversed;
     }
 
-    if(joy.getRawButton(7) && !fieldRelative){
-      fieldRelative = true;
-    }
-    else if(joy.getRawButton(7) && fieldRelative){
-      fieldRelative = false;
+    // Control field relative toggling with debounced joystick button
+    if(invertFieldRelative.get()){
+      fieldRelative = !fieldRelative;
     }
 
+    // Drive with joystick inputs and specific drive parameters
     if(isReversed){
-      driveTrain.drive(-y, -y, z, fieldRelative);
+      driveTrain.drive(-x, -y, z, fieldRelative);
     }
     else{
       driveTrain.drive(x, y, z, fieldRelative);
     }
-
-    
-    gyroButtonForward = false;
-    gyroButtonBackward = false;
   }
 
-  // Called once the command ends or is interrupted.
+  /**
+   * Called once the command ends or is interrupted.
+   */
   @Override
   public void end(boolean interrupted) {
+    // Stop the drivetain
     driveTrain.drive(0, 0, 0, false);
   }
 
-  // Returns true when the command should end.
+  /**
+   * Returns true when the command should end.
+   * 
+   * @return True when the command should end
+   */
   @Override
   public boolean isFinished() {
     return false;
   }
   
+  /**
+   * Returns the string value of the JoyDrive Class
+   * 
+   * @return The string value of the JoyDrive Class
+   */
   public String toString(){
     return "JoyDrive";
   }
