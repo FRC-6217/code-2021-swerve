@@ -98,8 +98,10 @@ public final class Constants {
     }
     public class NOT_SHOOTER_INTAKE_CONSTANTS{
         public static final int MOTOR_CONTROLLER_ID = 32;
+        public static final int CURRENT_CHANNEL = 0;
         public static final double SPEED = .4;
         public static final boolean IS_NEGATED = true;
+        public static final boolean DEBUG = false;
     }
     public class ARM_LIFT_CONSTANTS{
         public static final int MOTOR_CONTROLLER_ID_LEFT = 28;
