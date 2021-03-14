@@ -4,7 +4,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANAnalog;
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -18,22 +20,32 @@ import frc.robot.Constants.WHEEL_DRIVE_CONSTANTS;
 /* SwerveModule */
 public class SwerveModule {
   // Create Motor controller objects
-  private final CANSparkMax driveMotor;
   private final VictorSPX turningMotor;
+  private final CANSparkMax driveMotor;
 
   // Create encoder objects
-  private final CANEncoder driveEncoder;
   private final CANAnalog turningEncoder;
+  private final CANEncoder driveEncoder;
 
   // Create PDP object
   private final PowerDistributionPanel pdp = new PowerDistributionPanel();
-  private final int driveCurrentID;
   private final int turningCurrentID;
-
-  // TODO -- Implement PID for drive motor
+  private final int driveCurrentID;
 
   // Create a TrapezoidProfile PIDController object for the turning motor and initiallize it with constraints to allow for smooth turning
-  private final ProfiledPIDController turningPIDController = new ProfiledPIDController(1, 0, 0, new TrapezoidProfile.Constraints(4*Math.PI, 4*Math.PI));
+  private final ProfiledPIDController turningPIDController 
+    = new ProfiledPIDController(WHEEL_DRIVE_CONSTANTS.TURNING_P, 
+                                WHEEL_DRIVE_CONSTANTS.TURNING_I, 
+                                WHEEL_DRIVE_CONSTANTS.TURNING_D, 
+                                new TrapezoidProfile.Constraints(WHEEL_DRIVE_CONSTANTS.MAX_ANGULAR_SPEED_RADIANS,
+                                                                 WHEEL_DRIVE_CONSTANTS.MAX_ANGULAR_ACCEL_RADIANS));
+
+  // Create PID controller object for drive motor
+  private final CANPIDController drivePIDController;
+
+  // Create local variables to control 
+  private boolean drivePIDEnabled = WHEEL_DRIVE_CONSTANTS.ENABLE_DRIVE_PID;
+  private double maxSpeedMPS = WHEEL_DRIVE_CONSTANTS.MAX_DRIVE_SPEED_MPS;
 
   /**
    * Constructs a SwerveModule.
@@ -44,20 +56,30 @@ public class SwerveModule {
    * @param turningReversed Pass in true to reverse turning direction
    */
   public SwerveModule(int turningMotorChannel, int driveMotorChannel, int turningCurrentID, int driveCurrentID, boolean turningReversed, boolean driveReversed) {
+    /* Initialization */
 
     // Initialize motor controller objects with module specific IDs
     // Motor type of drive motor is brushless
-    driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
     turningMotor = new VictorSPX(turningMotorChannel);
+    driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
 
     // Fetch encoder objects from drive motor controller
     // Encoder type of turning encoder is absolute
-    driveEncoder = driveMotor.getEncoder();
     turningEncoder = driveMotor.getAnalog(CANAnalog.AnalogMode.kAbsolute);
+    driveEncoder = driveMotor.getEncoder();
 
     // Pass current channels to local variables
-    this.driveCurrentID = driveCurrentID;
     this.turningCurrentID = turningCurrentID;
+    this.driveCurrentID = driveCurrentID;
+
+    // Fetch PID controller object from drive motor
+    drivePIDController = driveMotor.getPIDController();
+
+
+    /* Config */
+
+    // Invert turning motor if object initialized with turningReversed == true
+    turningMotor.setInverted(turningReversed);
 
     // Restore defaults to clear any configs
     // Set idle mode to brake mode -- prevents coasting
@@ -66,21 +88,26 @@ public class SwerveModule {
     driveMotor.setInverted(driveReversed);
     driveMotor.setIdleMode(IdleMode.kBrake);
 
-    // Invert turning motor if object initialized with turningReversed == true
-    turningMotor.setInverted(turningReversed);
+    // Convert the velocity reading of the absolute encoder from revolutions per volt second to radians per volt second
+    turningEncoder.setVelocityConversionFactor(2 * Math.PI);
 
     // Invert drive encoder counting direction if object initialized with driveReversed == true
     // Set position conversion factor of drive encoder to circumference of wheel divided by encoder CPR -- Convert from encoder counts to feet
     // Set velocity conversion factor of drive encoder to circumference of wheel divided by 60 seconds -- Convert from RPM to feet per second
     driveEncoder.setInverted(driveReversed);
-    driveEncoder.setPositionConversionFactor((0.5 * Math.PI)/(driveEncoder.getCountsPerRevolution()));
-    driveEncoder.setVelocityConversionFactor((0.5 * Math.PI)/(60));
-
-    // Convert the velocity reading of the absolute encoder from revolutions per volt second to radians per volt second
-    turningEncoder.setVelocityConversionFactor(2 * Math.PI);
+    driveEncoder.setPositionConversionFactor((WHEEL_DRIVE_CONSTANTS.WHEEL_DIAMETER_FEET * Math.PI)/(driveEncoder.getCountsPerRevolution()));
+    driveEncoder.setVelocityConversionFactor((WHEEL_DRIVE_CONSTANTS.WHEEL_DIAMETER_FEET * Math.PI)/(60));
 
     // Limit the PID Controller's input range between -pi and pi and set the input to be continuous
     turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // Set drive PID parameters to those stored in CONSTANTS
+    drivePIDController.setP(WHEEL_DRIVE_CONSTANTS.DRIVE_P);
+    drivePIDController.setI(WHEEL_DRIVE_CONSTANTS.DRIVE_I);
+    drivePIDController.setD(WHEEL_DRIVE_CONSTANTS.DRIVE_D);
+    drivePIDController.setFF(WHEEL_DRIVE_CONSTANTS.DRIVE_FF);
+    drivePIDController.setIZone(WHEEL_DRIVE_CONSTANTS.DRIVE_FF);
+    drivePIDController.setOutputRange(WHEEL_DRIVE_CONSTANTS.DRIVE_MIN_OUT, WHEEL_DRIVE_CONSTANTS.DRIVE_MAX_OUT);
   }
 
   private double fit(double value, double minInput, double maxInput, double minOutput, double maxOutput){
@@ -172,8 +199,65 @@ public class SwerveModule {
     // Calculate the turning motor output from the turning PID controller.
     final var turnOutput = turningPIDController.calculate(getAngle(), state.angle.getRadians());
 
-    // Set drive and turning motors to calculated values
-    driveMotor.set(state.speedMetersPerSecond);
+    // Set turning motor to calculated value
     turningMotor.set(ControlMode.PercentOutput, turnOutput);
+
+    // Set drive motor speed
+    if(drivePIDEnabled){
+      // Pass in speed request to drive PID controller as RPM
+      drivePIDController.setReference(state.speedMetersPerSecond * (60/(WHEEL_DRIVE_CONSTANTS.WHEEL_DIAMETER_FEET * 0.3048 * Math.PI)), ControlType.kVelocity);
+    }
+    else{
+      // Set voltage of drive motor to speed request on range from -1 to 1 
+      driveMotor.set(fit(state.speedMetersPerSecond, -maxSpeedMPS, maxSpeedMPS, -1, 1));
+    }
+  }
+
+  public void setTurningP(double p){
+    turningPIDController.setP(p);
+  }
+
+  public void setTurningI(double i){
+    turningPIDController.setI(i);
+  }
+
+  public void setTurningD(double d){
+    turningPIDController.setD(d);
+  }
+
+  public void setConstraints(double maxVelocityRad, double maxAccelerationRad){
+    turningPIDController.setConstraints(new TrapezoidProfile.Constraints(maxVelocityRad, maxAccelerationRad));
+  }
+
+  public void enableDrivePID(boolean state){
+    drivePIDEnabled = state;
+  }
+
+  public void setMaxSpeedMPS(double max){
+    maxSpeedMPS = max;
+  }
+
+  public void setDriveP(double p){
+    drivePIDController.setP(p);
+  }
+
+  public void setDriveI(double i){
+    drivePIDController.setI(i);
+  }
+
+  public void setDriveD(double d){
+    drivePIDController.setD(d);
+  }
+
+  public void setDriveFF(double feedFoward){
+    drivePIDController.setFF(feedFoward);
+  }
+
+  public void setDriveIZone(double iZone){
+    drivePIDController.setIZone(iZone);
+  }
+
+  public void setDrivePIDOutputRange(double min, double max){
+    drivePIDController.setOutputRange(min, max);
   }
 }

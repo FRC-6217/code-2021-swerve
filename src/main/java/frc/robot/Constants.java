@@ -43,6 +43,8 @@ public final class Constants {
         public static final int FR_DRIVE_MOTOR_ID = 21;
         public static final int FL_DRIVE_MOTOR_ID = 24;
 
+        public static final double MAX_DRIVE_SPEED_MPS = 0.3;
+
         public static final double LENGTH = (21.5 * 0.0254); //front to back
         public static final double WIDTH = (24.5 * 0.0254); //Left to Right
 
@@ -66,12 +68,26 @@ public final class Constants {
         };
     }
     public class WHEEL_DRIVE_CONSTANTS{
-        public static final double MIN_ANGLE_REQUEST = -1;
-        public static final double MAX_ANGLE_REQUEST = 1;
+        public static final double WHEEL_DIAMETER_FEET = 0.5;
+
         public static final double MIN_VOLTAGE = 0.015625;
         public static final double MAX_VOLTAGE = 3.25;
-        public static final double SLOPE_CONVERSION = 360.0/3.09375;//(128.0/207.0);
-        public static final double Y_OFFSET_CONVERSION = -(1800/99);//-(209.0 / 207.0);
+
+        public static final double TURNING_P = 1.0;
+        public static final double TURNING_I = 0.0;
+        public static final double TURNING_D = 0.0;
+        public static final double MAX_ANGULAR_SPEED_RADIANS = 4 * Math.PI;
+        public static final double MAX_ANGULAR_ACCEL_RADIANS = 4 * Math.PI;
+
+        public static final boolean ENABLE_DRIVE_PID = false;
+        public static final double DRIVE_P = 0.1;
+        public static final double DRIVE_I = 0.0;
+        public static final double DRIVE_D = 0.0;
+        public static final double DRIVE_FF = 0.0;
+        public static final double DRIVE_IZONE = 0.0;
+        public static final double DRIVE_MIN_OUT = -1.0;
+        public static final double DRIVE_MAX_OUT = 1.0;
+        public static final double MAX_DRIVE_SPEED_MPS = DRIVE_TRAIN_CONSTANTS.MAX_DRIVE_SPEED_MPS;
     }
     public class SHOOTER_INTAKE_CONSTANTS{
         public static final int MOTOR_CONTROLLER_ID = 52;
