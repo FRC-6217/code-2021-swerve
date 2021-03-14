@@ -1,42 +1,64 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SHOOTER_INTAKE_CONSTANTS;
 
+/** ShooterIntake */
 public class ShooterIntake extends SubsystemBase {
-  VictorSPX shooterIntakeMotor;
-  int direction = 1;
+  // Create motor controller object
+  private VictorSPX motor;
+
+  // Create pdp object
+  private PowerDistributionPanel pdp;
   
+  /** Creates a new ShooterIntake */
   public ShooterIntake() {
-    shooterIntakeMotor = new VictorSPX(SHOOTER_INTAKE_CONSTANTS.MOTOR_CONTROLLER_ID);
-    if (SHOOTER_INTAKE_CONSTANTS.IS_NEGATED) {
-      direction = -1;
-    }
+    // Instantiate motor controller object
+    motor = new VictorSPX(SHOOTER_INTAKE_CONSTANTS.MOTOR_CONTROLLER_ID);
+
+    // Instantiate pdp object
+    pdp = new PowerDistributionPanel();
+
+    // Invert motor direction as needed
+    motor.setInverted(SHOOTER_INTAKE_CONSTANTS.IS_NEGATED);
+    
   }
 
-  public void forward() {
-    shooterIntakeMotor.set(ControlMode.PercentOutput, direction*SHOOTER_INTAKE_CONSTANTS.SPEED);
+  /**
+   * Returns the current draw of the motor in amps
+   * 
+   * @return The current draw of the motor in amps
+   */
+  public double getCurrent(){
+    return pdp.getCurrent(SHOOTER_INTAKE_CONSTANTS.CURRENT_CHANNEL);
   }
 
+  /** Activates the motor to intake from the chamber */
+  public void intake() {
+    motor.set(ControlMode.PercentOutput, SHOOTER_INTAKE_CONSTANTS.SPEED);
+  }
+
+  /** Activates the motor to eject stuck balls into the chamber */
   public void reverse() {
-    shooterIntakeMotor.set(ControlMode.PercentOutput, -direction*SHOOTER_INTAKE_CONSTANTS.SPEED);
+    motor.set(ControlMode.PercentOutput, -SHOOTER_INTAKE_CONSTANTS.SPEED);
   }
 
+  /** Deactivates the motor */
   public void off() {
-    shooterIntakeMotor.set(ControlMode.PercentOutput, 0);
+    motor.set(ControlMode.PercentOutput, 0);
   }
   
+  /** This method will be called once per scheduler run */
   @Override
   public void periodic() {
+    // Print all ShooterIntake sensor readings if debug is enabled
+    if(SHOOTER_INTAKE_CONSTANTS.DEBUG){
+      SmartDashboard.putNumber("Shooter Intake Current Draw", getCurrent());
+    }
   }
 }

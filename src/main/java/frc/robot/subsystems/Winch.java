@@ -14,7 +14,7 @@ import frc.robot.Constants.WINCH_CONSTANTS;
 /** Winch */
 public class Winch extends SubsystemBase {
   // Create motor controller object
-  private CANSparkMax winch;
+  private CANSparkMax motor;
 
   // Create pdp object
   private PowerDistributionPanel pdp;
@@ -25,23 +25,20 @@ public class Winch extends SubsystemBase {
   /** Creates a new Winch */
   public Winch() {
     // Instantiate motor controller object
-    winch = new CANSparkMax(WINCH_CONSTANTS.MOTOR_CONTROLLER_ID, MotorType.kBrushless);
+    motor = new CANSparkMax(WINCH_CONSTANTS.MOTOR_CONTROLLER_ID, MotorType.kBrushless);
     
     // Instantiate pdp object
     pdp = new PowerDistributionPanel();
 
     // Instantiate integrated encoder
-    enc = winch.getEncoder();
-    
-    winch.restoreFactoryDefaults();
-    winch.setIdleMode(IdleMode.kBrake);
+    enc = motor.getEncoder();
 
     // Restore defaults to clear any configs
     // Set idle mode to brake mode -- prevents coasting
     // Invert motor as needed
-    winch.restoreFactoryDefaults();
-    winch.setIdleMode(IdleMode.kBrake);
-    winch.setInverted(WINCH_CONSTANTS.IS_NEGATED);
+    motor.restoreFactoryDefaults();
+    motor.setIdleMode(IdleMode.kBrake);
+    motor.setInverted(WINCH_CONSTANTS.IS_NEGATED);
 
     // Set conversion factors of encoder
     enc.setPositionConversionFactor(WINCH_CONSTANTS.POSITION_CONVERSION_FACTOR);
@@ -82,19 +79,20 @@ public class Winch extends SubsystemBase {
 
   /** Activates the motor to move the climber in the upwards direction */
   public void up() {
-    winch.set(WINCH_CONSTANTS.SPEED);
+    motor.set(WINCH_CONSTANTS.SPEED);
   }
 
   /** Activates the motor to move the climber in the downwards direction */
   public void down() {
-    winch.set(-WINCH_CONSTANTS.SPEED);
+    motor.set(-WINCH_CONSTANTS.SPEED);
   }
 
   /** Deactivates the motor */
   public void off() {
-    winch.set(0);
+    motor.set(0);
   }
 
+  /** This method will be called once per scheduler run */
   @Override
   public void periodic() {
     // Print all Winch sensor readings if debug is enabled
