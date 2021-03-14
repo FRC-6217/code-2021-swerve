@@ -249,7 +249,7 @@ public class ArmLift extends SubsystemBase {
     if(ARM_LIFT_CONSTANTS.DEBUG){
       SmartDashboard.putNumber("Left Current Draw", getLeftCurrent());
       SmartDashboard.putNumber("Right Current Draw", getRightCurrent());
-      SmartDashboard.putNumber("Total Current Draw", getCurrent());
+      SmartDashboard.putNumber("Arm Total Current Draw", getCurrent());
 
       SmartDashboard.putNumber("Left Angle", getLeftAngle());
       SmartDashboard.putNumber("Right Angle", getRightAngle());

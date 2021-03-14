@@ -112,17 +112,20 @@ public final class Constants {
     public class BALL_SHOOTER_CONSTANTS{
         public static final int MOTOR_CONTROLLER_ID_TOP = 25;
         public static final int MOTOR_CONTROLLER_ID_BOTTOM = 27;
-        public static final double SPEED = 1;
+        public static final int CURRENT_CHANNEL_TOP = 0;
+        public static final int CURRENT_CHANNEL_BOTTOM = 0;
         public static final boolean IS_NEGATED_TOP = true;
         public static final boolean IS_NEGATED_BOTTOM = false;
+        public static final boolean ENABLE_PID = true;
+        public static final double P = 0.0001;
+        public static final double I = 0;
+        public static final double D = 0.001;
+        public static final double IZONE = 0;
+        public static final double FF = 0.000182;
+        public static final double MIN_OUT = -1;
+        public static final double MAX_OUT = 1;
         public static final boolean ENABLE_TUNING = true;
-        public static final double KP = 0.0001;
-        public static final double KI = 0;
-        public static final double KD = 0.001;
-        public static final double KIZ = 0;
-        public static final double KFF = 0.000182;
-        public static final double KMINOUTPUT = -1;
-        public static final double KMAXOUTPUT = 1;
+        public static final boolean DEBUG = false;
       
     }
     public class ALIGN_COMMAND_CONSTANTS{
