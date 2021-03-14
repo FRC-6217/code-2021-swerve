@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
-import frc.robot.Constants.WHEEL_DRIVE_CONSTANTS;
+import frc.robot.Constants.SWERVE_MODULE_CONSTANTS;
 
 /* SwerveModule */
 public class SwerveModule {
@@ -34,18 +34,17 @@ public class SwerveModule {
 
   // Create a TrapezoidProfile PIDController object for the turning motor and initiallize it with constraints to allow for smooth turning
   private final ProfiledPIDController turningPIDController 
-    = new ProfiledPIDController(WHEEL_DRIVE_CONSTANTS.TURNING_P, 
-                                WHEEL_DRIVE_CONSTANTS.TURNING_I, 
-                                WHEEL_DRIVE_CONSTANTS.TURNING_D, 
-                                new TrapezoidProfile.Constraints(WHEEL_DRIVE_CONSTANTS.MAX_ANGULAR_SPEED_RADIANS,
-                                                                 WHEEL_DRIVE_CONSTANTS.MAX_ANGULAR_ACCEL_RADIANS));
+    = new ProfiledPIDController(SWERVE_MODULE_CONSTANTS.TURNING_P, 
+                                SWERVE_MODULE_CONSTANTS.TURNING_I, 
+                                SWERVE_MODULE_CONSTANTS.TURNING_D, 
+                                new TrapezoidProfile.Constraints(SWERVE_MODULE_CONSTANTS.MAX_ANGULAR_SPEED_RADIANS,
+                                                                 SWERVE_MODULE_CONSTANTS.MAX_ANGULAR_ACCEL_RADIANS));
 
   // Create PID controller object for drive motor
   private final CANPIDController drivePIDController;
 
-  // Create local variables to control 
-  private boolean drivePIDEnabled = WHEEL_DRIVE_CONSTANTS.ENABLE_DRIVE_PID;
-  private double maxSpeedMPS = WHEEL_DRIVE_CONSTANTS.MAX_DRIVE_SPEED_MPS;
+  // Create local variable to control state of drive PID controller
+  private boolean drivePIDEnabled = SWERVE_MODULE_CONSTANTS.ENABLE_DRIVE_PID;
 
   /**
    * Constructs a SwerveModule.
@@ -95,19 +94,19 @@ public class SwerveModule {
     // Set position conversion factor of drive encoder to circumference of wheel divided by encoder CPR -- Convert from encoder counts to feet
     // Set velocity conversion factor of drive encoder to circumference of wheel divided by 60 seconds -- Convert from RPM to feet per second
     driveEncoder.setInverted(driveReversed);
-    driveEncoder.setPositionConversionFactor((WHEEL_DRIVE_CONSTANTS.WHEEL_DIAMETER_FEET * Math.PI)/(driveEncoder.getCountsPerRevolution()));
-    driveEncoder.setVelocityConversionFactor((WHEEL_DRIVE_CONSTANTS.WHEEL_DIAMETER_FEET * Math.PI)/(60));
+    driveEncoder.setPositionConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_FEET * Math.PI)/(driveEncoder.getCountsPerRevolution()));
+    driveEncoder.setVelocityConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_FEET * Math.PI)/(60));
 
     // Limit the PID Controller's input range between -pi and pi and set the input to be continuous
     turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
 
     // Set drive PID parameters to those stored in CONSTANTS
-    drivePIDController.setP(WHEEL_DRIVE_CONSTANTS.DRIVE_P);
-    drivePIDController.setI(WHEEL_DRIVE_CONSTANTS.DRIVE_I);
-    drivePIDController.setD(WHEEL_DRIVE_CONSTANTS.DRIVE_D);
-    drivePIDController.setFF(WHEEL_DRIVE_CONSTANTS.DRIVE_FF);
-    drivePIDController.setIZone(WHEEL_DRIVE_CONSTANTS.DRIVE_FF);
-    drivePIDController.setOutputRange(WHEEL_DRIVE_CONSTANTS.DRIVE_MIN_OUT, WHEEL_DRIVE_CONSTANTS.DRIVE_MAX_OUT);
+    drivePIDController.setP(SWERVE_MODULE_CONSTANTS.DRIVE_P);
+    drivePIDController.setI(SWERVE_MODULE_CONSTANTS.DRIVE_I);
+    drivePIDController.setD(SWERVE_MODULE_CONSTANTS.DRIVE_D);
+    drivePIDController.setFF(SWERVE_MODULE_CONSTANTS.DRIVE_FF);
+    drivePIDController.setIZone(SWERVE_MODULE_CONSTANTS.DRIVE_FF);
+    drivePIDController.setOutputRange(SWERVE_MODULE_CONSTANTS.DRIVE_MIN_OUT, SWERVE_MODULE_CONSTANTS.DRIVE_MAX_OUT);
   }
 
   private double fit(double value, double minInput, double maxInput, double minOutput, double maxOutput){
@@ -122,7 +121,7 @@ public class SwerveModule {
    * @return The value of absolute turning encoder on a range from -PI to PI radians
    */
   public double getAngle() {
-    return fit(turningEncoder.getPosition(), WHEEL_DRIVE_CONSTANTS.MIN_VOLTAGE, WHEEL_DRIVE_CONSTANTS.MAX_VOLTAGE, -Math.PI, Math.PI);
+    return fit(turningEncoder.getPosition(), SWERVE_MODULE_CONSTANTS.MIN_VOLTAGE, SWERVE_MODULE_CONSTANTS.MAX_VOLTAGE, -Math.PI, Math.PI);
   }
 
   /**
@@ -205,58 +204,111 @@ public class SwerveModule {
     // Set drive motor speed
     if(drivePIDEnabled){
       // Pass in speed request to drive PID controller as RPM
-      drivePIDController.setReference(state.speedMetersPerSecond * (60/(WHEEL_DRIVE_CONSTANTS.WHEEL_DIAMETER_FEET * 0.3048 * Math.PI)), ControlType.kVelocity);
+      drivePIDController.setReference(state.speedMetersPerSecond * (60/(SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_FEET * 0.3048 * Math.PI)), ControlType.kVelocity);
     }
     else{
       // Set voltage of drive motor to speed request on range from -1 to 1 
-      driveMotor.set(fit(state.speedMetersPerSecond, -maxSpeedMPS, maxSpeedMPS, -1, 1));
+      driveMotor.set(fit(state.speedMetersPerSecond, -SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS, SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS, -1, 1));
     }
   }
 
+  /**
+   * Sets the P constant of the turning PID controller
+   * 
+   * @param p The desired P constant of the turning PID controller
+   */
   public void setTurningP(double p){
     turningPIDController.setP(p);
   }
 
+  /**
+   * Sets the I constant of the turning PID controller
+   * 
+   * @param i The desired I constant of the turning PID controller
+   */
   public void setTurningI(double i){
     turningPIDController.setI(i);
   }
 
+  /**
+   * Sets the D constant of the turning PID controller
+   * 
+   * @param d The desired D constant of the turning PID controller
+   */
   public void setTurningD(double d){
     turningPIDController.setD(d);
   }
 
+  /**
+   * Sets the velocity and acceleration constraints of the turning PID controller
+   * 
+   * @param maxVelocityRad The desired max angular velocity of the turning PID controller in radians per second
+   * @param maxAccelerationRad The desired max angular acceleration of the turning PID controller in radians per second squared
+   */
   public void setConstraints(double maxVelocityRad, double maxAccelerationRad){
     turningPIDController.setConstraints(new TrapezoidProfile.Constraints(maxVelocityRad, maxAccelerationRad));
   }
 
+  /**
+   * Sets the state of the drive PID controller to on or off
+   * 
+   * @param state The desired state of the drive PID controller
+   */
   public void enableDrivePID(boolean state){
     drivePIDEnabled = state;
   }
 
-  public void setMaxSpeedMPS(double max){
-    maxSpeedMPS = max;
-  }
-
+  /**
+   * Sets the P constant of the drive PID controller
+   * 
+   * @param p The desired P constant of the drive PID controller
+   */
   public void setDriveP(double p){
     drivePIDController.setP(p);
   }
 
+  /**
+   * Sets the I constant of the drive PID controller
+   * 
+   * @param i The desired I constant of the drive PID controller
+   */
   public void setDriveI(double i){
     drivePIDController.setI(i);
   }
 
+  /**
+   * Sets the D constant of the drive PID controller
+   * 
+   * @param d The desired D constant of the drive PID controller
+   */
   public void setDriveD(double d){
     drivePIDController.setD(d);
   }
 
-  public void setDriveFF(double feedFoward){
-    drivePIDController.setFF(feedFoward);
+  /**
+   * Sets the feed forward constant of the drive PID controller
+   * 
+   * @param feedForward The desired feed forward constant of the drive PID controller
+   */
+  public void setDriveFF(double feedForward){
+    drivePIDController.setFF(feedForward);
   }
 
+  /**
+   * Sets the integration zone constant of the drive PID controller
+   * 
+   * @param iZone The desired integration zone constant of the drive PID controller
+   */
   public void setDriveIZone(double iZone){
     drivePIDController.setIZone(iZone);
   }
 
+  /**
+   * Sets the output range of the drive PID controller
+   * 
+   * @param min The desired min output of the drive PID controller
+   * @param max The desired max output of the drive PID controller
+   */
   public void setDrivePIDOutputRange(double min, double max){
     drivePIDController.setOutputRange(min, max);
   }

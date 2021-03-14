@@ -67,7 +67,7 @@ public final class Constants {
             BACK_RIGHT
         };
     }
-    public class WHEEL_DRIVE_CONSTANTS{
+    public class SWERVE_MODULE_CONSTANTS{
         public static final double WHEEL_DIAMETER_FEET = 0.5;
 
         public static final double MIN_VOLTAGE = 0.015625;
