@@ -138,8 +138,12 @@ public final class Constants {
     }
     public class WINCH_CONSTANTS{
         public static final int MOTOR_CONTROLLER_ID = 26;
+        public static final int CURRENT_CHANNEL = 0;
         public static final double SPEED = 1;
         public static final boolean IS_NEGATED = true;
+        public static final double POSITION_CONVERSION_FACTOR = 1;
+        public static final double VELOCITY_CONVERSION_FACTOR = 1;
+        public static final boolean DEBUG = false;
     }
 
     public static class COLOR_WHEEL_CONSTANTS{
