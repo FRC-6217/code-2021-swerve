@@ -144,9 +144,11 @@ public final class Constants {
 
     public static class COLOR_WHEEL_CONSTANTS{
         public static final int MOTOR_CONTROLLER_ID = 29;
+        public static final int CURRENT_CHANNEL = 0;
         public static final double SPEED = .25;
         public static final boolean IS_NEGATED = false;
         public static final I2C.Port PORT = Port.kOnboard;
+        public static final boolean DEBUG = false;
     }
     
     public static class COLORS_CONSTANTS {

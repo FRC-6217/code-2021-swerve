@@ -94,30 +94,6 @@ public class DriveTrain extends SubsystemBase {
     }
   }
 
-
-  /** Zeroes the heading of the robot. */
-  public void zeroHeading() {
-    gyro.reset();
-  }
-
-  /**
-   * Returns the heading of the robot.
-   *
-   * @return the robot's heading in degrees, from -180 to 180
-   */
-  public double getHeading() {
-    return gyro.getRotation2d().getDegrees();
-  }
-
-  /**
-   * Returns the turn rate of the robot.
-   *
-   * @return The turn rate of the robot, in degrees per second
-   */
-  public double getTurnRate() {
-    return gyro.getRate() * (DRIVE_TRAIN_CONSTANTS.GYRO_REVERSED ? -1.0 : 1.0);
-  }
-
   /**
    * Returns the current draw of a specific wheel module's turning motor in amps
    * 
@@ -265,6 +241,29 @@ public class DriveTrain extends SubsystemBase {
             getVelocity(MODULE.BACK_LEFT) +
             getVelocity(MODULE.BACK_RIGHT))
             /(4);
+  }
+
+  /** Zeroes the heading of the robot. */
+  public void zeroHeading() {
+    gyro.reset();
+  }
+
+  /**
+   * Returns the heading of the robot.
+   *
+   * @return the robot's heading in degrees, from -180 to 180
+   */
+  public double getHeading() {
+    return gyro.getRotation2d().getDegrees();
+  }
+
+  /**
+   * Returns the turn rate of the robot.
+   *
+   * @return The turn rate of the robot, in degrees per second
+   */
+  public double getTurnRate() {
+    return gyro.getRate() * (DRIVE_TRAIN_CONSTANTS.GYRO_REVERSED ? -1.0 : 1.0);
   }
 
   /**

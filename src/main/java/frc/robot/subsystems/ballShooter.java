@@ -118,9 +118,9 @@ public class BallShooter extends SubsystemBase {
   }
 
   /**
-   * Returns the current draw of the bottom motor
+   * Returns the current draw of the bottom motor in amps
    * 
-   * @return The current draw of the bottom motor
+   * @return The current draw of the bottom motor in amps
    */
   public double getBottomCurrent(){
     return pdp.getCurrent(BALL_SHOOTER_CONSTANTS.CURRENT_CHANNEL_BOTTOM);
