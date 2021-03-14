@@ -102,9 +102,12 @@ public final class Constants {
     public class ARM_LIFT_CONSTANTS{
         public static final int MOTOR_CONTROLLER_ID_LEFT = 28;
         public static final int MOTOR_CONTROLLER_ID_RIGHT = 30;
+        public static final int CURRENT_CHANNEL_LEFT = 0;
+        public static final int CURRENT_CHANNEL_RIGHT = 0;
         public static final double SPEED = .5;
         public static final boolean IS_NEGATED_LEFT = false;
         public static final boolean IS_NEGATED_RIGHT = false;
+        public static final boolean DEBUG = false;
     }
     public class BALL_SHOOTER_CONSTANTS{
         public static final int MOTOR_CONTROLLER_ID_TOP = 25;

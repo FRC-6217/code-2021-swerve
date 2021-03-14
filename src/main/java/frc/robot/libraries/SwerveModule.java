@@ -47,7 +47,7 @@ public class SwerveModule {
   private boolean drivePIDEnabled = SWERVE_MODULE_CONSTANTS.ENABLE_DRIVE_PID;
 
   /**
-   * Constructs a SwerveModule.
+   * Create a new SwerveModule
    *
    * @param driveMotorChannel ID for the drive motor.
    * @param turningMotorChannel ID for the turning motor.
@@ -114,15 +114,6 @@ public class SwerveModule {
     double b = maxOutput - (m * maxInput);
     return value * m + b;
   }
-  
-  /**
-   * Returns the value of absolute turning encoder on a range from -PI to PI radians 
-   * 
-   * @return The value of absolute turning encoder on a range from -PI to PI radians
-   */
-  public double getAngle() {
-    return fit(turningEncoder.getPosition(), SWERVE_MODULE_CONSTANTS.MIN_VOLTAGE, SWERVE_MODULE_CONSTANTS.MAX_VOLTAGE, -Math.PI, Math.PI);
-  }
 
   /**
    * Returns the current draw of the turning motor
@@ -132,7 +123,15 @@ public class SwerveModule {
   public double getTurningCurrent(){
     return pdp.getCurrent(turningCurrentID);
   }
-
+  
+  /**
+   * Returns the value of absolute turning encoder on a range from -PI to PI radians 
+   * 
+   * @return The value of absolute turning encoder on a range from -PI to PI radians
+   */
+  public double getAngle() {
+    return fit(turningEncoder.getPosition(), SWERVE_MODULE_CONSTANTS.MIN_VOLTAGE, SWERVE_MODULE_CONSTANTS.MAX_VOLTAGE, -Math.PI, Math.PI);
+  }
 
   /**
    * Returns the angular velocity of the turning encoder in radians per volt second

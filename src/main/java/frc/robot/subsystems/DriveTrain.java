@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants.DRIVE_TRAIN_CONSTANTS;
 import frc.robot.Constants.SWERVE_MODULE_CONSTANTS;
 import frc.robot.Constants.DRIVE_TRAIN_CONSTANTS.MODULE;
@@ -140,19 +141,19 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Returns the heading of a specific wheel module in radians
+   * Returns the heading of a specific wheel module from -180 to 180 deg
    * 
    * @param module The wheel module to return the heading of
-   * @return The heading of the wheel module in radians
+   * @return The heading of the wheel module from -180 to 180 deg
    */
   public double getWheelHeading(MODULE module){
-    return this.module.get(module).getAngle();
+    return Math.toDegrees(this.module.get(module).getAngle());
   }
 
   /**
-   * Returns the average heading of the wheel modules in radians
+   * Returns the average heading of the wheel modules from -180 to 180 deg
    * 
-   * @return The average heading of the wheel modules in radians
+   * @return The average heading of the wheel modules from -180 to 180 deg
    */
   public double getWheelHeading(){
     return (getWheelHeading(MODULE.FRONT_LEFT) +
@@ -163,19 +164,19 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Returns the angular velocity of a specific wheel module in radians per second
+   * Returns the angular velocity of a specific wheel module in degrees per second
    * 
    * @param module The wheel module to return the angular velocity of
-   * @return The angular velocity of the wheel module in radians per second
+   * @return The angular velocity of the wheel module in degrees per second
    */
   public double getWheelTurnRate(MODULE module){
-    return this.module.get(module).getAngularVelocity();
+    return Math.toDegrees(this.module.get(module).getAngularVelocity());
   }
 
   /**
-   * Returns the average angular velocity of the wheel modules in radians per second
+   * Returns the average angular velocity of the wheel modules in degrees per second
    * 
-   * @return The average angular velocity of the wheel modules in radians per second
+   * @return The average angular velocity of the wheel modules in degrees per second
    */
   public double getWheelTurnRate(){
     return (getWheelTurnRate(MODULE.FRONT_LEFT) +
@@ -457,6 +458,7 @@ public class DriveTrain extends SubsystemBase {
   }
     
 
+  /** This method will be called once per scheduler run */
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
@@ -467,7 +469,7 @@ public class DriveTrain extends SubsystemBase {
       frontRight.getState(),
       backRight.getState());
 
-    // Print all debug values
+    // Print all DriveTrain sensor readings if debug is enabled
     if(DRIVE_TRAIN_CONSTANTS.DEBUG){
       SmartDashboard.putNumber("Gyro Heading", getHeading());
       SmartDashboard.putNumber("Gyro Turn Rate", getTurnRate());
