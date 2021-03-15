@@ -12,7 +12,7 @@ import frc.robot.Constants.STATE;
 import frc.robot.commands.BallShooterCommandAuto;
 import frc.robot.commands.ShooterIntakeCommand;
 import frc.robot.commands.Wait;
-import frc.robot.subsystems.ballShooter;
+import frc.robot.subsystems.BallShooter;
 import frc.robot.subsystems.ShooterIntake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -22,7 +22,7 @@ public class AutoWeekZero extends SequentialCommandGroup {
   /**
    * Creates a new AutoWeekZero.
    */
-  public AutoWeekZero(ballShooter bs, ShooterIntake si) {
+  public AutoWeekZero(BallShooter bs, ShooterIntake si) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(new  BallShooterCommandAuto(bs, true), new Wait(1), new ShooterIntakeCommand(si, STATE.FORWARDS), new Wait(1), new ShooterIntakeCommand(si, STATE.OFF), new BallShooterCommandAuto(bs, false));

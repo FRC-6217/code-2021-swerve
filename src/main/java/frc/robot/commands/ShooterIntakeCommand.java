@@ -31,7 +31,7 @@ public class ShooterIntakeCommand extends CommandBase {
   public void execute() {
     switch (state) {
       case FORWARDS:
-        intake.forward();
+        intake.intake();
         break;
       case REVERSE:
         intake.reverse();

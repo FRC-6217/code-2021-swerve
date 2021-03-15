@@ -29,30 +29,30 @@ public class ArmLiftCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    switch(state) {
-      case UP:
-        arm.up();
-        break;
-      case DOWN:
-        arm.down();
-        break;
-      case OFF:
-        arm.off();
-        break;
-      case FORWARDS:
-        arm.off();
-        break;
-      case REVERSE:
-        arm.off();
-        break;
-    }
+    // switch(state) {
+    //   case UP:
+    //     arm.up();
+    //     break;
+    //   case DOWN:
+    //     arm.down();
+    //     break;
+    //   case OFF:
+    //     arm.off();
+    //     break;
+    //   case FORWARDS:
+    //     arm.off();
+    //     break;
+    //   case REVERSE:
+    //     arm.off();
+    //     break;
+    // }
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.off();
+    // arm.off();
   }
 
   // Returns true when the command should end.

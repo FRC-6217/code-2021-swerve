@@ -9,15 +9,15 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ballShooter;
+import frc.robot.subsystems.BallShooter;
 
 public class BallShooterCommand extends CommandBase {
   boolean ifOn;
-  ballShooter shooter;
+  BallShooter shooter;
   /**
    * Creates a new ShooterCommand.
    */
-  public BallShooterCommand(ballShooter shooter, boolean ifOn) {
+  public BallShooterCommand(BallShooter shooter, boolean ifOn) {
     addRequirements(shooter);
     this.shooter = shooter;
     this.ifOn = ifOn;
@@ -36,7 +36,7 @@ public class BallShooterCommand extends CommandBase {
     //TODO make distance based
     double top = SmartDashboard.getNumber("Top Shoot Set", 0);
     double bottom = SmartDashboard.getNumber("Bottom Shoot Set", 0);
-    shooter.onPID(top, bottom);
+    shooter.on(top, bottom);
     // shooter.on();
 
   }
