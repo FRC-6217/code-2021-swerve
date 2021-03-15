@@ -17,7 +17,7 @@ import frc.robot.Constants.BALL_SHOOTER_CONSTANTS;
 public class BallShooter extends SubsystemBase {
 
   // Create objects for motor controllers
-  private CANSparkMax top;
+ private CANSparkMax top;
   private CANSparkMax bottom;
 
   // Create objects for integrated encoders
