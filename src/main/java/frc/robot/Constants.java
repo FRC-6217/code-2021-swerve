@@ -167,6 +167,8 @@ public final class Constants {
     }
 
     public class LIME_LIGHT_CONSTANTS{
+        public static final int DRIVER_MODE_PIPELINE = 0;
+        public static final int VISION_PROCESSING_PIPELINE = 1;
         public static final double GOAL_HEIGHT = 83.5;
         public static final double LIME_HEIGHT = 18.5;
         public static final double LIME_ANGLE = 19.5;
