@@ -8,7 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants;
 import frc.robot.Constants.NOT_SHOOTER_INTAKE_CONSTANTS;
 import frc.robot.Constants.SHOOTER_INTAKE_CONSTANTS;
 
@@ -93,7 +93,7 @@ public class NotShooterIntake extends SubsystemBase {
   @Override
   public void periodic() {
     // Print all NotShooterIntake sensor readings if debug is enabled
-    if(NOT_SHOOTER_INTAKE_CONSTANTS.DEBUG){
+    if(NOT_SHOOTER_INTAKE_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
       SmartDashboard.putNumber("Not Shooter Intake Current Draw", getCurrent());
       SmartDashboard.putNumber("Not Shooter Intake Position", getRotations());
       SmartDashboard.putNumber("Not Shooter Intake Velocity", getRPM());

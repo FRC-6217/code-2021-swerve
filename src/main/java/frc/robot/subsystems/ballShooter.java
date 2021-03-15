@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.BALL_SHOOTER_CONSTANTS;
 
 /** BallShooter */
@@ -272,7 +273,7 @@ public class BallShooter extends SubsystemBase {
   @Override
   public void periodic() {
     // Print all BallShooter sensor readings if debug is enabled
-    if(BALL_SHOOTER_CONSTANTS.DEBUG){
+    if(BALL_SHOOTER_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
       SmartDashboard.putNumber("Top Current Draw", getTopCurrent());
       SmartDashboard.putNumber("Bottom Current Draw", getBottomCurrent());
       SmartDashboard.putNumber("Shooter Total Current Draw", getCurrent());

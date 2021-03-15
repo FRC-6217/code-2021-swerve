@@ -8,7 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants;
 import frc.robot.Constants.WINCH_CONSTANTS;
 
 /** Winch */
@@ -96,7 +96,7 @@ public class Winch extends SubsystemBase {
   @Override
   public void periodic() {
     // Print all Winch sensor readings if debug is enabled
-    if(WINCH_CONSTANTS.DEBUG){
+    if(WINCH_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
       SmartDashboard.putNumber("Winch Current Draw", getCurrent());
       SmartDashboard.putNumber("Winch Position", getRotations());
       SmartDashboard.putNumber("Winch Velocity", getRPM());

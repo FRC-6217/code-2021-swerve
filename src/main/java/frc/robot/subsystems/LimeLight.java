@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.libraries.Angle;
 import frc.robot.libraries.Distance;
+import frc.robot.Constants;
 import frc.robot.Constants.LIME_LIGHT_CONSTANTS;
 
 /** LimeLight */
@@ -72,26 +73,32 @@ public class LimeLight extends SubsystemBase {
   /** This method will be called once per scheduler run */
   @Override
   public void periodic() {
-    // Print current operation mode of limelight
-    if(table.getEntry("pipeline").getDouble(-1) == LIME_LIGHT_CONSTANTS.DRIVER_MODE_PIPELINE){
-      SmartDashboard.putString("Camera Mode", "Driver Mode");
-    }
-    else if(table.getEntry("pipeline").getDouble(-1) == LIME_LIGHT_CONSTANTS.VISION_PROCESSING_PIPELINE){
-      SmartDashboard.putString("Camera Mode", "Vision Processing Mode");
-    }
-
     // Determines if limelight sees target and calculates angle and distance values if it does
     if(tv.getDouble(0) == 1){
-      SmartDashboard.putBoolean("Target Aquired", true);
-
       angle.setAngle(-ty.getDouble(Double.POSITIVE_INFINITY));
       distance.setDistance((LIME_LIGHT_CONSTANTS.GOAL_HEIGHT - LIME_LIGHT_CONSTANTS.LIME_HEIGHT)/(Math.tan(LIME_LIGHT_CONSTANTS.LIME_ANGLE + tx.getDouble(0))));
     }
     else{
-      SmartDashboard.putBoolean("Target Aquired", false);
-
       angle.setAngle(Double.POSITIVE_INFINITY);
       distance.setDistance(Double.POSITIVE_INFINITY);
+    }
+
+    // Print all LimeLight sensor readings if debug is enabled
+    if(LIME_LIGHT_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
+      // Print current operation mode of limelight
+      if(table.getEntry("pipeline").getDouble(-1) == LIME_LIGHT_CONSTANTS.DRIVER_MODE_PIPELINE){
+        SmartDashboard.putString("Camera Mode", "Driver Mode");
+      }
+      else if(table.getEntry("pipeline").getDouble(-1) == LIME_LIGHT_CONSTANTS.VISION_PROCESSING_PIPELINE){
+        SmartDashboard.putString("Camera Mode", "Vision Processing Mode");
+      }
+
+      // Print if target is found
+      SmartDashboard.putBoolean("Target Aquired", tv.getDouble(0) == 1);
+
+      // Print current calculated angle and distance
+      SmartDashboard.putNumber("Lime Angle", angle.getAngle());
+      SmartDashboard.putNumber("Lime Distance", distance.getDistance());
     }
   }
 }

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants;
 import frc.robot.Constants.COLORS_CONSTANTS;
 import frc.robot.Constants.COLOR_WHEEL_CONSTANTS;
 
@@ -198,7 +198,7 @@ public class ColorWheel extends SubsystemBase {
   @Override
   public void periodic() {
     // Print all ColorWheel sensor readings if debug is enabled
-    if(COLOR_WHEEL_CONSTANTS.DEBUG){
+    if(COLOR_WHEEL_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
       SmartDashboard.putNumber("Color Wheel Current Draw", getCurrent());
       SmartDashboard.putNumber("Color Wheel Rotations", getRotations());
       SmartDashboard.putNumber("Color Wheel RPM", getRPM());

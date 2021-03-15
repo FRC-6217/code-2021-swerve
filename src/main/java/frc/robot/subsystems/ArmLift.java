@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import frc.robot.Constants;
 import frc.robot.Constants.ARM_LIFT_CONSTANTS;
 
 /* ArmLift */
@@ -246,7 +247,7 @@ public class ArmLift extends SubsystemBase {
   @Override
   public void periodic() {
     // Print all ArmLift sensor readings if debug is enabled
-    if(ARM_LIFT_CONSTANTS.DEBUG){
+    if(ARM_LIFT_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
       SmartDashboard.putNumber("Left Current Draw", getLeftCurrent());
       SmartDashboard.putNumber("Right Current Draw", getRightCurrent());
       SmartDashboard.putNumber("Arm Total Current Draw", getCurrent());

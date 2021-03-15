@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.SHOOTER_INTAKE_CONSTANTS;
 
 /** ShooterIntake */
@@ -57,7 +58,7 @@ public class ShooterIntake extends SubsystemBase {
   @Override
   public void periodic() {
     // Print all ShooterIntake sensor readings if debug is enabled
-    if(SHOOTER_INTAKE_CONSTANTS.DEBUG){
+    if(SHOOTER_INTAKE_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
       SmartDashboard.putNumber("Shooter Intake Current Draw", getCurrent());
     }
   }
