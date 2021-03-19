@@ -22,6 +22,7 @@ public class SwerveModule {
   // Create Motor controller objects
   private final VictorSPX turningMotor;
   private final CANSparkMax driveMotor;
+  private final boolean driveInverted;
 
   // Create encoder objects
   private final CANAnalog turningEncoder;
@@ -62,6 +63,8 @@ public class SwerveModule {
     turningMotor = new VictorSPX(turningMotorChannel);
     driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
 
+    driveInverted = driveReversed;
+
     // Fetch encoder objects from drive motor controller
     // Encoder type of turning encoder is absolute
     turningEncoder = driveMotor.getAnalog(CANAnalog.AnalogMode.kAbsolute);
@@ -84,8 +87,8 @@ public class SwerveModule {
     // Set idle mode to brake mode -- prevents coasting
     // Invert drive motor if object initialized with driveReversed == true
     driveMotor.restoreFactoryDefaults();
-    driveMotor.setInverted(driveReversed);
-    driveMotor.setIdleMode(IdleMode.kBrake);
+    // driveMotor.setInverted(driveReversed);
+    driveMotor.setIdleMode(IdleMode.kCoast);
 
     // Convert the velocity reading of the absolute encoder from revolutions per volt second to radians per volt second
     turningEncoder.setVelocityConversionFactor(2 * Math.PI);
@@ -93,7 +96,7 @@ public class SwerveModule {
     // Invert drive encoder counting direction if object initialized with driveReversed == true
     // Set position conversion factor of drive encoder to circumference of wheel divided by encoder CPR -- Convert from encoder counts to feet
     // Set velocity conversion factor of drive encoder to circumference of wheel divided by 60 seconds -- Convert from RPM to feet per second
-    driveEncoder.setInverted(driveReversed);
+    // driveEncoder.setInverted(driveReversed);
     driveEncoder.setPositionConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_FEET * Math.PI)/(driveEncoder.getCountsPerRevolution()));
     driveEncoder.setVelocityConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_FEET * Math.PI)/(60));
 
@@ -207,7 +210,12 @@ public class SwerveModule {
     }
     else{
       // Set voltage of drive motor to speed request on range from -1 to 1 
-      driveMotor.set(fit(state.speedMetersPerSecond, -SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS, SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS, -1, 1));
+      if(driveInverted){
+        driveMotor.set(-fit(state.speedMetersPerSecond, -SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS, SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS, -1, 1));
+      }
+      else{
+        driveMotor.set(fit(state.speedMetersPerSecond, -SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS, SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS, -1, 1));
+      }
     }
   }
 

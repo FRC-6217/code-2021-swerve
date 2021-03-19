@@ -132,8 +132,8 @@ public class Align extends CommandBase {
   @Override
   public void execute() {
     //Dead zone
-    x = (Math.abs(joy.getRawAxis(0)) > .2) ? joy.getRawAxis(0) : 0.0;
-    y = (Math.abs(joy.getRawAxis(1)) > .2) ? joy.getRawAxis(1) : 0.0;
+    x = (Math.abs(joy.getRawAxis(1)) > .2) ? joy.getRawAxis(0) : 0.0;
+    y = (Math.abs(joy.getRawAxis(0)) > .2) ? joy.getRawAxis(1) : 0.0;
     z = (Math.abs(joy.getRawAxis(2)) > .2) ? joy.getRawAxis(2) : 0.0;
 
     if(angleUse && !distanceUse){
@@ -145,15 +145,15 @@ public class Align extends CommandBase {
           localAngle = 0;
         }      
 
-        errorZ = pidZ.calculate(localAngle, 0);
+        errorZ = pidZ.calculate(localAngle, -1);
         SmartDashboard.putNumber("ErrorZ", errorZ);
         outputZ = MathUtil.clamp(errorZ, -1, 1);
 
-        // driveTrain.drive(x, -y, outputZ, 0.5);
+        driveTrain.drive(x, y, -outputZ, false);
         //TODO set max speed constant
       }
       else{
-        // driveTrain.Drive(x, -y, z, 0.5);
+        driveTrain.drive(x, y, z, false);
       }
     }
   
@@ -276,18 +276,19 @@ public class Align extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(angleUse && distanceUse){
-      return (pidZ.atSetpoint() && pidY.atSetpoint());
-    }
-    else if(angleUse && !distanceUse){
-      return (pidZ.atSetpoint());
-    }
-    else if(!angleUse && distanceUse){
-      return (pidY.atSetpoint());
-    }
-    else{
-      return true;
-    }
+    // if(angleUse && distanceUse){
+    //   return (pidZ.atSetpoint() && pidY.atSetpoint());
+    // }
+    // else if(angleUse && !distanceUse){
+    //   return (pidZ.atSetpoint());
+    // }
+    // else if(!angleUse && distanceUse){
+    //   return (pidY.atSetpoint());
+    // }
+    // else{
+    //   return true;
+    // }
+    return true;
   }
 
   public String toString(){

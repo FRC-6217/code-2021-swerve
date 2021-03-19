@@ -76,7 +76,7 @@ public class LimeLight extends SubsystemBase {
     // Determines if limelight sees target and calculates angle and distance values if it does
     if(tv.getDouble(0) == 1){
       angle.setAngle(-ty.getDouble(Double.POSITIVE_INFINITY));
-      distance.setDistance((LIME_LIGHT_CONSTANTS.GOAL_HEIGHT - LIME_LIGHT_CONSTANTS.LIME_HEIGHT)/(Math.tan(LIME_LIGHT_CONSTANTS.LIME_ANGLE + tx.getDouble(0))));
+      distance.setDistance((LIME_LIGHT_CONSTANTS.GOAL_HEIGHT - LIME_LIGHT_CONSTANTS.LIME_HEIGHT)/(Math.tan(Math.toRadians(LIME_LIGHT_CONSTANTS.LIME_ANGLE + (tx.getDouble(0) * LIME_LIGHT_CONSTANTS.ANGLE_ADJUST)))));
     }
     else{
       angle.setAngle(Double.POSITIVE_INFINITY);
@@ -97,6 +97,7 @@ public class LimeLight extends SubsystemBase {
       SmartDashboard.putBoolean("Target Aquired", tv.getDouble(0) == 1);
 
       // Print current calculated angle and distance
+      SmartDashboard.putNumber("Lime x", tx.getDouble(0));
       SmartDashboard.putNumber("Lime Angle", angle.getAngle());
       SmartDashboard.putNumber("Lime Distance", distance.getDistance());
     }
