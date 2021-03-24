@@ -84,6 +84,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    System.out.println("Cookie Crumbler 2");
+    System.out.println("Cookie Crumbler 2");
+    System.out.println("Cookie Crumbler 2");
+    System.out.println("Cookie Crumbler 2");
+    System.out.println("Cookie Crumbler 2");
+    System.out.println("Cookie Crumbler 2");
+    System.out.println("Cookie Crumbler 2");
+    System.out.println("Cookie Crumbler 2");
+    CommandScheduler.getInstance().run();
   }
 
   @Override

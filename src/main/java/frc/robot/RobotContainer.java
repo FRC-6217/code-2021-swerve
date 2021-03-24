@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.LogMessage;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -16,6 +17,7 @@ import frc.robot.commands.Align;
 import frc.robot.commands.ArmLiftCommand;
 import frc.robot.commands.BallShooterCommand;
 import frc.robot.commands.ColorWheelCommand;
+import frc.robot.commands.ExampleTraj;
 import frc.robot.commands.JoyDrive;
 import frc.robot.commands.NotShooterIntakeCommand;
 import frc.robot.commands.ShooterIntakeCommand;
@@ -80,6 +82,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
    new JoystickButton(joy, 1).whileHeld(new Align(driveTrain, joy, angle, distance));
+    new JoystickButton(joy, 2).whenPressed(new ExampleTraj(driveTrain));
  
     //Xbox Joystick
   
@@ -117,7 +120,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // fake.setLeftShift(.9);
     // return new Test(DriveTrain, fake);
+  
     return null;
+    
     // An ExampleCommand will run in autonomous
   //  return new AutoWeekZero(ballShooter, shooterIntake);
   // return null;
