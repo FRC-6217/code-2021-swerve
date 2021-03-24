@@ -116,7 +116,7 @@ public final class Constants {
         public static final double ANGLE_ADJUST = 0.865247;
         public static final double GOAL_HEIGHT = 91.5;
         public static final double LIME_HEIGHT = 23.5;
-        public static final double LIME_ANGLE = 17.95;
+        public static final double LIME_ANGLE = 16.5;
         public static final boolean DEBUG = true;
     }
 

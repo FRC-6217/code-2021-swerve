@@ -67,6 +67,14 @@ public class Align extends CommandBase {
 
     pidZ.setTolerance(0.1, 0.1);
     pidY.setTolerance(0.1, 0.1);
+
+    SmartDashboard.putNumber("KpAlignZ", 0.1);
+    SmartDashboard.putNumber("KiAlignZ", 0);
+	  SmartDashboard.putNumber("KdAlignZ", 0);
+	
+	  SmartDashboard.putNumber("KpAlignY", 0.05);
+    SmartDashboard.putNumber("KiAlignY", 0);
+    SmartDashboard.putNumber("KdAlignY", 0);
     
   }
 
@@ -100,18 +108,14 @@ public class Align extends CommandBase {
     atSetY = false;
     pidY = new PIDController(kPY, kIY, kDY);
     pidY.setTolerance(50, 1000);
+
+    
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putNumber("KpAlignZ", 0.1);
-    SmartDashboard.putNumber("KiAlignZ", 0);
-	  SmartDashboard.putNumber("KdAlignZ", 0);
-	
-	  SmartDashboard.putNumber("KpAlignY", 0.1);
-    SmartDashboard.putNumber("KiAlignY", 0);
-    SmartDashboard.putNumber("KdAlignY", 0);
+
   
 
     atSetZ = false;
@@ -126,6 +130,24 @@ public class Align extends CommandBase {
       atSetZ = true;
     }
 
+    atSetY = false;
+    
+    double localDistance = distance.getDistance();
+    
+    errorY = pidY.calculate(localDistance, 0);
+    SmartDashboard.putNumber("ErrorY", errorY);
+    outputY = MathUtil.clamp(errorY, -1, 1);
+
+    if(pidY.atSetpoint()){
+      atSetY = true;
+    }
+
+  }
+
+  private double fit(double value, double minInput, double maxInput, double minOutput, double maxOutput){
+    double m = (maxOutput - minOutput)/(maxInput - minInput);
+    double b = maxOutput - (m * maxInput);
+    return value * m + b;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -170,8 +192,9 @@ public class Align extends CommandBase {
           localDistance = 7;
         }      
 
-        errorY = pidY.calculate(localDistance, 7);
+        errorY = pidY.calculate(localDistance, 100);
         SmartDashboard.putNumber("ErrorY", errorY);
+        fit(outputY, -60, 60, -1, 1);
         outputY = MathUtil.clamp(errorY, -1, 1);
 
         atSetY = false;
@@ -179,11 +202,11 @@ public class Align extends CommandBase {
           atSetY = true;
         }
 
-        // driveTrain.Drive(x, -outputY, -z, 0.1);
+        driveTrain.drive(outputY * 0.5, y, z, false);
         //TODO set max speed constant
       }
       else{
-        // driveTrain.Drive(x, -y, -z, 0.5);
+        driveTrain.drive(x, y, z, false);
       }
     }
 
@@ -198,22 +221,23 @@ public class Align extends CommandBase {
           localAngle = 0;
         }
         if (pidY.atSetpoint()) {
-          localDistance = 0;
+          localDistance = 200;
         }      
 
         errorZ = pidZ.calculate(localAngle, 0);
         SmartDashboard.putNumber("ErrorZ", errorZ);
         outputZ = MathUtil.clamp(errorZ, -1, 1);
 
-        errorY = pidY.calculate(localDistance, 10);
+        errorY = pidY.calculate(localDistance, 100);
         SmartDashboard.putNumber("ErrorY", errorY);
-        outputY = MathUtil.clamp(errorY, -1, 1);
+        fit(outputY, -60, 60, -1, 1);
+        outputY = MathUtil.clamp(errorY, -0.5, 0.5);
 
-        // driveTrain.Drive(-x, outputY, outputZ, 0.5);
+        driveTrain.drive(outputY * 0.5, -y, -outputZ * 0.5, false);
         //TODO set max speed constant
       }
       else{
-        // driveTrain.Drive(-y, x, z, 0.5);
+        driveTrain.drive(x, y, z, false);
       }
 
     }
