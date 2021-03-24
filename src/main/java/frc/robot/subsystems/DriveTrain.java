@@ -198,19 +198,19 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Returns the position of a specific wheel module in feet
+   * Returns the position of a specific wheel module in meters
    * 
    * @param module The wheel module to return the position of
-   * @return The position of the wheel module in feet
+   * @return The position of the wheel module in meters
    */
   public double getPosition(MODULE module){
     return this.module.get(module).getPosition();
   }
 
   /**
-   * Returns the average position of the wheel in feet
+   * Returns the average position of the wheel in meters
    * 
-   * @return The average position of the wheel modules in feet
+   * @return The average position of the wheel modules in meters
    */
   public double getPosition(){
     return (getPosition(MODULE.FRONT_LEFT) +
@@ -221,19 +221,19 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Returns the velocity of a specific wheel module in feet per second
+   * Returns the velocity of a specific wheel module in meters per second
    * 
    * @param module The wheel module to return the angular velocity of
-   * @return The velocity of the wheel module in feet per second
+   * @return The velocity of the wheel module in meters per second
    */
   public double getVelocity(MODULE module){
     return this.module.get(module).getVelocity();
   }
 
   /**
-   * Returns the average velocity of the wheel modules in feet per second
+   * Returns the average velocity of the wheel modules in meters per second
    * 
-   * @return The average velocity of the wheel modules in feet per second
+   * @return The average velocity of the wheel modules in meters per second
    */
   public double getVelocity(){
     return (getVelocity(MODULE.FRONT_LEFT) +
@@ -300,7 +300,7 @@ public class DriveTrain extends SubsystemBase {
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, gyro.getRotation2d())
                 : new ChassisSpeeds(xSpeed, ySpeed, rot));
     SwerveDriveKinematics.normalizeWheelSpeeds(
-        swerveModuleStates, 3);
+        swerveModuleStates, SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS);
     frontLeft.setDesiredState(swerveModuleStates[0]);
     frontRight.setDesiredState(swerveModuleStates[1]);
     backLeft.setDesiredState(swerveModuleStates[2]);
@@ -314,7 +314,7 @@ public class DriveTrain extends SubsystemBase {
    */
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.normalizeWheelSpeeds(
-        desiredStates, 3);
+        desiredStates, SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS);
     frontLeft.setDesiredState(desiredStates[0]);
     frontRight.setDesiredState(desiredStates[1]);
     backLeft.setDesiredState(desiredStates[2]);

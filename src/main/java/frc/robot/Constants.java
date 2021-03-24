@@ -88,7 +88,7 @@ public final class Constants {
         public static final int BL_DRIVE_CURRENT_CHANNEL = 0;
         public static final int FR_DRIVE_CURRENT_CHANNEL = 0;
         public static final int FL_DRIVE_CURRENT_CHANNEL = 0;
-        public static final double MAX_DRIVE_SPEED_MPS = 1;
+        public static final double MAX_DRIVE_SPEED_MPS = 3;
         public static final double LENGTH = (21.5 * 0.0254); //front to back
         public static final double WIDTH = (24.5 * 0.0254); //Left to Right
         public static final SwerveDriveKinematics DRIVE_KINEMATICS =
@@ -152,7 +152,8 @@ public final class Constants {
 
 
     public class SWERVE_MODULE_CONSTANTS{
-        public static final double WHEEL_DIAMETER_FEET = 0.5;
+        public static final double WHEEL_DIAMETER_METER = 0.1016; 
+        public static final double GEAR_RATIO = 20 / 3;
 
         public static final double MIN_VOLTAGE = 0.015625;
         public static final double MAX_VOLTAGE = 3.25;
@@ -172,6 +173,7 @@ public final class Constants {
         public static final double DRIVE_MIN_OUT = -1.0;
         public static final double DRIVE_MAX_OUT = 1.0;
         public static final double MAX_DRIVE_SPEED_MPS = DRIVE_TRAIN_CONSTANTS.MAX_DRIVE_SPEED_MPS;
+        public static final double MAX_DRIVE_ACCELERATION_MPS = 3;
     }
     
     public class ALIGN_COMMAND_CONSTANTS{

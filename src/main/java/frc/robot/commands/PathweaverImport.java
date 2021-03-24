@@ -4,8 +4,12 @@
 
 package frc.robot.commands;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.HolonomicDriveController;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -17,22 +21,25 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DRIVE_TRAIN_CONSTANTS;
 import frc.robot.Constants.SWERVE_MODULE_CONSTANTS;
 import frc.robot.subsystems.DriveTrain;
 
-public class ExampleTraj extends CommandBase {
+public class PathweaverImport extends CommandBase {
   private DriveTrain driveTrain;
   private Timer timer;
   private HolonomicDriveController controller;
   private TrajectoryConfig config;
   private Trajectory exampleTrajectory;
+  private String traj;
   /** Creates a new ExampleTraj. */
-  public ExampleTraj(DriveTrain driveTrain) {
+  public PathweaverImport(DriveTrain driveTrain, String traj) {
     addRequirements(driveTrain);
     this.driveTrain = driveTrain;
+    this.traj = traj;
     timer = new Timer();
     
     controller = new HolonomicDriveController(
@@ -49,19 +56,16 @@ public class ExampleTraj extends CommandBase {
     config =
         new TrajectoryConfig(SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS, SWERVE_MODULE_CONSTANTS.MAX_DRIVE_ACCELERATION_MPS);
 
+
     // An example trajectory to follow.  All units in meters.
-    exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(
-            new Translation2d(1, 1),
-            new Translation2d(2, -1)
-        ),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(9, 0, new Rotation2d(0)),
-        config
-    );
+    String trajectoryJSON = "src/main/java/frc/robot/trajPaths/output/" + traj + ".wpilib.json";
+    exampleTrajectory = new Trajectory();
+    try {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+      exampleTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+    }
 
     driveTrain.resetOdometry(exampleTrajectory.getInitialPose());
     timer.reset();
@@ -77,6 +81,7 @@ public class ExampleTraj extends CommandBase {
     ChassisSpeeds adjustedSpeeds = controller.calculate(driveTrain.getPose(), goal, Rotation2d.fromDegrees(0));
 
     driveTrain.setModuleStates(DRIVE_TRAIN_CONSTANTS.DRIVE_KINEMATICS.toSwerveModuleStates(adjustedSpeeds));
+    // driveTrain.drive(.1, 0, 0, true);
   }
 
   // Called once the command ends or is interrupted.

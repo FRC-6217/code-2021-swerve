@@ -97,8 +97,8 @@ public class SwerveModule {
     // Set position conversion factor of drive encoder to circumference of wheel divided by encoder CPR -- Convert from encoder counts to feet
     // Set velocity conversion factor of drive encoder to circumference of wheel divided by 60 seconds -- Convert from RPM to feet per second
     // driveEncoder.setInverted(driveReversed);
-    driveEncoder.setPositionConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_FEET * Math.PI)/(driveEncoder.getCountsPerRevolution()));
-    driveEncoder.setVelocityConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_FEET * Math.PI)/(60));
+    driveEncoder.setPositionConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_METER * Math.PI)/(SWERVE_MODULE_CONSTANTS.GEAR_RATIO * driveEncoder.getCountsPerRevolution()));
+    driveEncoder.setVelocityConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_METER * Math.PI)/(SWERVE_MODULE_CONSTANTS.GEAR_RATIO * 60));
 
     // Limit the PID Controller's input range between -pi and pi and set the input to be continuous
     turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
@@ -206,7 +206,7 @@ public class SwerveModule {
     // Set drive motor speed
     if(drivePIDEnabled){
       // Pass in speed request to drive PID controller as RPM
-      drivePIDController.setReference(state.speedMetersPerSecond * (60/(SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_FEET * 0.3048 * Math.PI)), ControlType.kVelocity);
+      drivePIDController.setReference((state.speedMetersPerSecond * 60 * SWERVE_MODULE_CONSTANTS.GEAR_RATIO) / (SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_METER * Math.PI), ControlType.kVelocity);
     }
     else{
       // Set voltage of drive motor to speed request on range from -1 to 1 
