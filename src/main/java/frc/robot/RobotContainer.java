@@ -21,6 +21,7 @@ import frc.robot.commands.ExampleTraj;
 import frc.robot.commands.JoyDrive;
 import frc.robot.commands.NotShooterIntakeCommand;
 import frc.robot.commands.ShooterIntakeCommand;
+import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.commands.WinchCommand;
 import frc.robot.commands.autoCommand.Test;
 import frc.robot.libraries.Angle;
@@ -81,7 +82,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(joy, 1).whileHeld(new Align(driveTrain, joy, angle));
+   new JoystickButton(joy, 1).whileHeld(new Align(driveTrain, joy, angle, distance));
     new JoystickButton(joy, 2).whenPressed(new ExampleTraj(driveTrain));
  
     //Xbox Joystick
@@ -89,13 +90,15 @@ public class RobotContainer {
     new JoystickTrigger(xbox, 3).whileHeld(new ShooterIntakeCommand(shooterIntake, STATE.FORWARDS));
     new JoystickButton(xbox, Button.kBumperLeft.value).whileHeld(new ArmLiftCommand(armLift, STATE.UP));
     new JoystickTrigger(xbox, 2).whileHeld(new ArmLiftCommand(armLift, STATE.DOWN));
-    new JoystickButton(xbox, Button.kBumperRight.value).toggleWhenPressed(new BallShooterCommand(ballShooter, true));
+    new JoystickButton(xbox, Button.kBumperRight.value).toggleWhenPressed(new BallShooterCommand(ballShooter, true, 2500, 2500));
+    new JoystickButton(joy, 7).toggleWhenPressed(new ShooterSetSpeed(2500, 2500));
+    new JoystickButton(joy, 9).toggleWhenPressed(new ShooterSetSpeed(3125, 3125));
+    new JoystickButton(joy, 11).toggleWhenPressed(new ShooterSetSpeed(5000, 5000));
     new JoystickButton(xbox, Button.kY.value).whileHeld(new WinchCommand(winch, STATE.UP));
     new JoystickButton(xbox, Button.kX.value).whileHeld(new WinchCommand(winch, STATE.DOWN));
     new JoystickButton(xbox, Button.kA.value).whileHeld(new NotShooterIntakeCommand(notShooterIntake, STATE.FORWARDS));
     new JoystickButton(xbox, Button.kB.value).whileHeld(new NotShooterIntakeCommand(notShooterIntake, STATE.REVERSE));
     new JoystickButton(xbox, Button.kStickRight.value).whileHeld(new ColorWheelCommand(colorWheel));
-  
 
     // arm hn
     /*

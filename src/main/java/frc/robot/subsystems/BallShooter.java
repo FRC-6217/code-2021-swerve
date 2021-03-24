@@ -34,6 +34,8 @@ public class BallShooter extends SubsystemBase {
   // Create local variable to control state of ball shooter PID controller
   private boolean PIDEnabled = BALL_SHOOTER_CONSTANTS.ENABLE_PID;
 
+  private int topSpeed;
+  private int bottomSpeed;
   /** Creates a new BallShooter. */
   public BallShooter() {
     // Instantiate motor controller objects
@@ -43,7 +45,8 @@ public class BallShooter extends SubsystemBase {
     // Fetch integrated encoder objects from motor controllers
     topEnc = top.getEncoder();
     bottomEnc = bottom.getEncoder();
-
+    topSpeed = 0;
+    bottomSpeed = 0;
     // Instantiate pdp
     pdp = new PowerDistributionPanel();
 
@@ -186,9 +189,18 @@ public class BallShooter extends SubsystemBase {
       bottomPID.setReference(bottomRPM, ControlType.kVelocity);
     }
     else{
-      top.set(topRPM / 5000);
-      bottom.set(bottomRPM / 5000);
+ //     top.set(topRPM / 5000);
+ //     bottom.set(bottomRPM / 5000);
+        top.set(topSpeed / 5000);
+        bottom.set(bottomSpeed / 5000);
+        System.out.println("motor on");
     }
+  }
+
+  public void setspeed(int top, int bottom) {
+    this.topSpeed = top;
+    System.out.println("setting speed");
+    this.bottomSpeed = bottom;
   }
 
   /** Deactivates the ball shooter */

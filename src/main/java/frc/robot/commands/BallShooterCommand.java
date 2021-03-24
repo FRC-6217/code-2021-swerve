@@ -14,28 +14,34 @@ import frc.robot.subsystems.BallShooter;
 public class BallShooterCommand extends CommandBase {
   boolean ifOn;
   BallShooter shooter;
+
+  private double top;
+  private double bottom;
   /**
    * Creates a new ShooterCommand.
    */
-  public BallShooterCommand(BallShooter shooter, boolean ifOn) {
+  public BallShooterCommand(BallShooter shooter, boolean ifOn, double top, double bottom) {
     addRequirements(shooter);
     this.shooter = shooter;
     this.ifOn = ifOn;
+
+    this.top = top;
+    this.bottom = bottom;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putNumber("Top Shoot Set", 2700);
-    SmartDashboard.putNumber("Bottom Shoot Set", 2700);
+  //  SmartDashboard.putNumber("Top Shoot Set", 2700);
+  //  SmartDashboard.putNumber("Bottom Shoot Set", 2700);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     //TODO make distance based
-    double top = SmartDashboard.getNumber("Top Shoot Set", 0);
-    double bottom = SmartDashboard.getNumber("Bottom Shoot Set", 0);
+    top = SmartDashboard.getNumber("Top Shoot Set", 0);
+    bottom = SmartDashboard.getNumber("Bottom Shoot Set", 0);
     shooter.on(top, bottom);
     // shooter.on();
 
