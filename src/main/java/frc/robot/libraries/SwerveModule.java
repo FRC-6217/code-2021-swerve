@@ -97,11 +97,16 @@ public class SwerveModule {
     // Set position conversion factor of drive encoder to circumference of wheel divided by encoder CPR -- Convert from encoder counts to feet
     // Set velocity conversion factor of drive encoder to circumference of wheel divided by 60 seconds -- Convert from RPM to feet per second
     // driveEncoder.setInverted(driveReversed);
-    driveEncoder.setPositionConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_METER * Math.PI)/(SWERVE_MODULE_CONSTANTS.GEAR_RATIO * driveEncoder.getCountsPerRevolution()));
-    driveEncoder.setVelocityConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_METER * Math.PI)/(SWERVE_MODULE_CONSTANTS.GEAR_RATIO * 60));
+    driveEncoder.setPositionConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_METER * Math.PI)/(SWERVE_MODULE_CONSTANTS.GEAR_RATIO * 42 * 1000));
+    // driveEncoder.setPositionConversionFactor(1);
+    driveEncoder.setVelocityConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_METER * Math.PI)/(SWERVE_MODULE_CONSTANTS.GEAR_RATIO * 60 * 1000));
+    // driveEncoder.setVelocityConversionFactor(0.00001);
 
     // Limit the PID Controller's input range between -pi and pi and set the input to be continuous
     turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // Set tolerance of PID controller
+    turningPIDController.setTolerance(Math.PI/16);
 
     // Set drive PID parameters to those stored in CONSTANTS
     drivePIDController.setP(SWERVE_MODULE_CONSTANTS.DRIVE_P);
@@ -167,7 +172,11 @@ public class SwerveModule {
    * @return The distance traveled by the drive wheel in feet
    */
   public double getPosition() {
-    return driveEncoder.getPosition();
+    if(driveInverted){
+      return -driveEncoder.getPosition();
+    }else{
+      return driveEncoder.getPosition();
+    }
   }
 
   /**
@@ -176,7 +185,11 @@ public class SwerveModule {
    * @return The translational velocity of the drive wheel in feet per second
    */
   public double getVelocity() {
-    return driveEncoder.getVelocity();
+    if(driveInverted){
+      return -driveEncoder.getVelocity();
+    }else{
+      return driveEncoder.getVelocity();
+    }
   }
 
   /**
@@ -203,6 +216,7 @@ public class SwerveModule {
     // Set turning motor to calculated value
     turningMotor.set(ControlMode.PercentOutput, turnOutput);
 
+    if(turningPIDController.atSetpoint()){}
     // Set drive motor speed
     if(drivePIDEnabled){
       // Pass in speed request to drive PID controller as RPM

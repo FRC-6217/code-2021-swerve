@@ -43,8 +43,8 @@ public class PathweaverImport extends CommandBase {
     timer = new Timer();
     
     controller = new HolonomicDriveController(
-      new PIDController(1, 0, 0), new PIDController(1, 0, 0),
-      new ProfiledPIDController(1, 0, 0,
+      new PIDController(0.5, 0, 0), new PIDController(0.5, 0, 0),
+      new ProfiledPIDController(0.5, 0, 0,
         new TrapezoidProfile.Constraints(6.28, 3.14)));
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -52,13 +52,15 @@ public class PathweaverImport extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // Reset Drive Encoders
+    driveTrain.resetPosition();
     // Create config for trajectory
     config =
         new TrajectoryConfig(SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS, SWERVE_MODULE_CONSTANTS.MAX_DRIVE_ACCELERATION_MPS);
 
 
     // An example trajectory to follow.  All units in meters.
-    String trajectoryJSON = "src/main/java/frc/robot/trajPaths/output/" + traj + ".wpilib.json";
+    String trajectoryJSON = "trajPaths/output/ToD5.wpilib.json";
     exampleTrajectory = new Trajectory();
     try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
@@ -77,7 +79,7 @@ public class PathweaverImport extends CommandBase {
   @Override
   public void execute() {
     
-    Trajectory.State goal = exampleTrajectory.sample(0.5);
+    Trajectory.State goal = exampleTrajectory.sample(timer.get());
     ChassisSpeeds adjustedSpeeds = controller.calculate(driveTrain.getPose(), goal, Rotation2d.fromDegrees(0));
 
     driveTrain.setModuleStates(DRIVE_TRAIN_CONSTANTS.DRIVE_KINEMATICS.toSwerveModuleStates(adjustedSpeeds));
@@ -93,6 +95,6 @@ public class PathweaverImport extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() > .5;
+    return timer.get() > 20;
   }
 }

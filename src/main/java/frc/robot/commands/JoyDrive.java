@@ -41,6 +41,9 @@ public class JoyDrive extends CommandBase {
     // Initialize button debouncer objects
     reverseHeading = new ButtonDebouncer(joy, 5);
     invertFieldRelative = new ButtonDebouncer(joy, 6);
+
+    //reset drive encoders
+    driveTrain.resetPosition();
   }
 
   /**

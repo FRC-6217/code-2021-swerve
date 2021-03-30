@@ -88,7 +88,7 @@ public final class Constants {
         public static final int BL_DRIVE_CURRENT_CHANNEL = 0;
         public static final int FR_DRIVE_CURRENT_CHANNEL = 0;
         public static final int FL_DRIVE_CURRENT_CHANNEL = 0;
-        public static final double MAX_DRIVE_SPEED_MPS = 3;
+        public static final double MAX_DRIVE_SPEED_MPS = 1;
         public static final double LENGTH = (21.5 * 0.0254); //front to back
         public static final double WIDTH = (24.5 * 0.0254); //Left to Right
         public static final SwerveDriveKinematics DRIVE_KINEMATICS =
@@ -99,7 +99,7 @@ public final class Constants {
                 new Translation2d(-LENGTH / 2, -WIDTH / 2));
         public static final boolean GYRO_REVERSED = false;
         public static final boolean ENABLE_TUNING = false;
-        public static final boolean DEBUG = false;
+        public static final boolean DEBUG = true;
 
         public static enum MODULE {
             FRONT_LEFT,
@@ -161,8 +161,8 @@ public final class Constants {
         public static final double TURNING_P = 1.0;
         public static final double TURNING_I = 0.0;
         public static final double TURNING_D = 0.0;
-        public static final double MAX_ANGULAR_SPEED_RADIANS = 50 * Math.PI;
-        public static final double MAX_ANGULAR_ACCEL_RADIANS = 50 * Math.PI;
+        public static final double MAX_ANGULAR_SPEED_RADIANS = 100 * Math.PI;
+        public static final double MAX_ANGULAR_ACCEL_RADIANS = 100 * Math.PI;
 
         public static final boolean ENABLE_DRIVE_PID = false;
         public static final double DRIVE_P = 0.1;

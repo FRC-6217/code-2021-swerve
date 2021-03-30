@@ -27,13 +27,14 @@ public class BallShooterCommand extends CommandBase {
 
     this.top = top;
     this.bottom = bottom;
+
+   SmartDashboard.putNumber("Top Shoot Set", 2700);
+   SmartDashboard.putNumber("Bottom Shoot Set", 2700);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  //  SmartDashboard.putNumber("Top Shoot Set", 2700);
-  //  SmartDashboard.putNumber("Bottom Shoot Set", 2700);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

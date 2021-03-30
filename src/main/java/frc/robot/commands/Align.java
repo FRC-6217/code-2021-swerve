@@ -130,17 +130,17 @@ public class Align extends CommandBase {
       atSetZ = true;
     }
 
-    atSetY = false;
+    // atSetY = false;
     
-    double localDistance = distance.getDistance();
+    // double localDistance = distance.getDistance();
     
-    errorY = pidY.calculate(localDistance, 0);
-    SmartDashboard.putNumber("ErrorY", errorY);
-    outputY = MathUtil.clamp(errorY, -1, 1);
+    // errorY = pidY.calculate(localDistance, 0);
+    // SmartDashboard.putNumber("ErrorY", errorY);
+    // outputY = MathUtil.clamp(errorY, -1, 1);
 
-    if(pidY.atSetpoint()){
-      atSetY = true;
-    }
+    // if(pidY.atSetpoint()){
+    //   atSetY = true;
+    // }
 
   }
 
@@ -192,7 +192,7 @@ public class Align extends CommandBase {
           localDistance = 7;
         }      
 
-        errorY = pidY.calculate(localDistance, 100);
+        errorY = pidY.calculate(localDistance, 120);
         SmartDashboard.putNumber("ErrorY", errorY);
         fit(outputY, -60, 60, -1, 1);
         outputY = MathUtil.clamp(errorY, -1, 1);
@@ -228,7 +228,7 @@ public class Align extends CommandBase {
         SmartDashboard.putNumber("ErrorZ", errorZ);
         outputZ = MathUtil.clamp(errorZ, -1, 1);
 
-        errorY = pidY.calculate(localDistance, 100);
+        errorY = pidY.calculate(localDistance, 150);
         SmartDashboard.putNumber("ErrorY", errorY);
         fit(outputY, -60, 60, -1, 1);
         outputY = MathUtil.clamp(errorY, -0.5, 0.5);
