@@ -462,7 +462,7 @@ public class DriveTrain extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     odometry.update(
-      new Rotation2d(getHeading()),
+      Rotation2d.fromDegrees(getHeading()),
       frontLeft.getState(),
       backLeft.getState(),
       frontRight.getState(),
@@ -508,6 +508,11 @@ public class DriveTrain extends SubsystemBase {
       SmartDashboard.putNumber("Front Right Velocity", getVelocity(MODULE.FRONT_RIGHT));
       SmartDashboard.putNumber("Back Left Velocity", getVelocity(MODULE.BACK_LEFT));
       SmartDashboard.putNumber("Back Right Velocity", getVelocity(MODULE.BACK_RIGHT));
+
+      // Odometry debug values
+      SmartDashboard.putNumber("Odometry X", odometry.getPoseMeters().getX());
+      SmartDashboard.putNumber("Odometry Y", odometry.getPoseMeters().getY());
+      SmartDashboard.putNumber("Odometry Z", odometry.getPoseMeters().getRotation().getDegrees());
     }
 
     //Fetch and update PID values if tuning enabled

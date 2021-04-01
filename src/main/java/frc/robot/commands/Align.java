@@ -68,13 +68,6 @@ public class Align extends CommandBase {
     pidZ.setTolerance(0.1, 0.1);
     pidY.setTolerance(0.1, 0.1);
 
-    SmartDashboard.putNumber("KpAlignZ", 0.1);
-    SmartDashboard.putNumber("KiAlignZ", 0);
-	  SmartDashboard.putNumber("KdAlignZ", 0);
-	
-	  SmartDashboard.putNumber("KpAlignY", 0.05);
-    SmartDashboard.putNumber("KiAlignY", 0);
-    SmartDashboard.putNumber("KdAlignY", 0);
     
   }
 
@@ -115,7 +108,14 @@ public class Align extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    SmartDashboard.putNumber("KpAlignZ", 0.1);
+    SmartDashboard.putNumber("KiAlignZ", 0);
+	  SmartDashboard.putNumber("KdAlignZ", 0);
+	
+	  SmartDashboard.putNumber("KpAlignY", 0.05);
+    SmartDashboard.putNumber("KiAlignY", 0);
+    SmartDashboard.putNumber("KdAlignY", 0);
+    
   
 
     atSetZ = false;

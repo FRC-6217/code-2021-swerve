@@ -73,7 +73,7 @@ public class ExampleTraj extends CommandBase {
   @Override
   public void execute() {
     
-    Trajectory.State goal = exampleTrajectory.sample(0.5);
+    Trajectory.State goal = exampleTrajectory.sample(timer.get());
     ChassisSpeeds adjustedSpeeds = controller.calculate(driveTrain.getPose(), goal, Rotation2d.fromDegrees(0));
 
     driveTrain.setModuleStates(DRIVE_TRAIN_CONSTANTS.DRIVE_KINEMATICS.toSwerveModuleStates(adjustedSpeeds));
@@ -88,6 +88,6 @@ public class ExampleTraj extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() > .5;
+    return timer.get() > 20;
   }
 }

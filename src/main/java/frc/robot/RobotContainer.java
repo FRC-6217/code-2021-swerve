@@ -94,8 +94,8 @@ public class RobotContainer {
     new JoystickButton(xbox, Button.kBumperRight.value).toggleWhenPressed(new BallShooterCommand(ballShooter, true, 2500, 2500));
     new JoystickButton(joy, 8).whenPressed(new ShooterSetSpeed(1250, 3500));
     new JoystickButton(joy, 7).whenPressed(new ShooterSetSpeed(2500, 2500));
-    new JoystickButton(joy, 9).whenPressed(new ShooterSetSpeed(2600, 2600));
-    new JoystickButton(joy, 11).whenPressed(new ShooterSetSpeed(3100, 3100));
+    new JoystickButton(joy, 9).whenPressed(new ShooterSetSpeed(2700, 2700));
+    new JoystickButton(joy, 11).whenPressed(new ShooterSetSpeed(3050, 3050));
     new JoystickButton(xbox, Button.kY.value).whileHeld(new WinchCommand(winch, STATE.UP));
     new JoystickButton(xbox, Button.kX.value).whileHeld(new WinchCommand(winch, STATE.DOWN));
     new JoystickButton(xbox, Button.kA.value).whileHeld(new NotShooterIntakeCommand(notShooterIntake, STATE.FORWARDS));
