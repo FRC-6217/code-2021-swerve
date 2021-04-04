@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DRIVE_TRAIN_CONSTANTS;
+import frc.robot.Constants.PATHFINDER_CONSTANTS;
 import frc.robot.Constants.SWERVE_MODULE_CONSTANTS;
 import frc.robot.subsystems.DriveTrain;
 
@@ -47,7 +48,7 @@ public class ExampleTraj extends CommandBase {
   public void initialize() {
     // Create config for trajectory
     config =
-        new TrajectoryConfig(SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS, SWERVE_MODULE_CONSTANTS.MAX_DRIVE_ACCELERATION_MPS);
+        new TrajectoryConfig(PATHFINDER_CONSTANTS.MAX_DRIVE_SPEED_MPS, PATHFINDER_CONSTANTS.MAX_DRIVE_ACCELERATION_MPS);
 
     // An example trajectory to follow.  All units in meters.
     exampleTrajectory = TrajectoryGenerator.generateTrajectory(

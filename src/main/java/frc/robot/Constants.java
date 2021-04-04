@@ -172,7 +172,7 @@ public final class Constants {
         public static final double DRIVE_IZONE = 0.0;
         public static final double DRIVE_MIN_OUT = -1.0;
         public static final double DRIVE_MAX_OUT = 1.0;
-        public static final double MAX_DRIVE_SPEED_MPS = 10;//DRIVE_TRAIN_CONSTANTS.MAX_DRIVE_SPEED_MPS;
+        public static final double MAX_DRIVE_SPEED_MPS = 3;//DRIVE_TRAIN_CONSTANTS.MAX_DRIVE_SPEED_MPS;
         public static final double MAX_DRIVE_ACCELERATION_MPS = 3;
     }
     
@@ -190,6 +190,11 @@ public final class Constants {
         public static final double[] RBG_FRC_GREEN = { 0.197, 0.561, 0.240 };
         public static final double[] RBG_FRC_RED = { 0.460, 0.378, 0.161 };
         public static final double[] RGB_FRC_YELLOW = { 0.361, 0.524, 0.113 };
+    }
+
+    public static class PATHFINDER_CONSTANTS {
+        public static final double MAX_DRIVE_SPEED_MPS = 20;//DRIVE_TRAIN_CONSTANTS.MAX_DRIVE_SPEED_MPS;
+        public static final double MAX_DRIVE_ACCELERATION_MPS = 2;
     }
 
     public static enum SIDE {

@@ -62,9 +62,9 @@ public class JoyDrive extends CommandBase {
     double governor = Math.abs(1 - joy.getRawAxis(3));
 
     // Creates a deadzone of 30% and sets x, y, and z values to the governed joystick axes
-    double x = (Math.abs(joy.getRawAxis(1)) > .3 ? joy.getRawAxis(1) * governor : 0.0);
-    double y = (Math.abs(joy.getRawAxis(0)) > .3 ? joy.getRawAxis(0) * governor : 0.0);
-    double z = (Math.abs(joy.getRawAxis(2)) > .3 ? joy.getRawAxis(2) * governor : 0.0);  
+    double x = -(Math.abs(joy.getRawAxis(1)) > .3 ? joy.getRawAxis(1) * governor : 0.0);
+    double y = -(Math.abs(joy.getRawAxis(0)) > .3 ? joy.getRawAxis(0) * governor : 0.0);
+    double z = -(Math.abs(joy.getRawAxis(2)) > .3 ? joy.getRawAxis(2) * governor : 0.0);  
     
 
     // Control heading reversal with debounced joystick button
