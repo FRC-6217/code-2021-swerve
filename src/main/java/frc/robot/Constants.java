@@ -172,7 +172,7 @@ public final class Constants {
         public static final double DRIVE_IZONE = 0.0;
         public static final double DRIVE_MIN_OUT = -1.0;
         public static final double DRIVE_MAX_OUT = 1.0;
-        public static final double MAX_DRIVE_SPEED_MPS = DRIVE_TRAIN_CONSTANTS.MAX_DRIVE_SPEED_MPS;
+        public static final double MAX_DRIVE_SPEED_MPS = 10;//DRIVE_TRAIN_CONSTANTS.MAX_DRIVE_SPEED_MPS;
         public static final double MAX_DRIVE_ACCELERATION_MPS = 3;
     }
     

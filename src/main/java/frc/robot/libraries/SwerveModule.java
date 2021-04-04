@@ -88,7 +88,7 @@ public class SwerveModule {
     // Invert drive motor if object initialized with driveReversed == true
     driveMotor.restoreFactoryDefaults();
     // driveMotor.setInverted(driveReversed);
-    driveMotor.setIdleMode(IdleMode.kCoast);
+    driveMotor.setIdleMode(IdleMode.kBrake);
 
     // Convert the velocity reading of the absolute encoder from revolutions per volt second to radians per volt second
     turningEncoder.setVelocityConversionFactor(2 * Math.PI);
@@ -97,10 +97,10 @@ public class SwerveModule {
     // Set position conversion factor of drive encoder to circumference of wheel divided by encoder CPR -- Convert from encoder counts to feet
     // Set velocity conversion factor of drive encoder to circumference of wheel divided by 60 seconds -- Convert from RPM to feet per second
     // driveEncoder.setInverted(driveReversed);
-    driveEncoder.setPositionConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_METER * Math.PI)/(SWERVE_MODULE_CONSTANTS.GEAR_RATIO * 42 * 1000));
-    // driveEncoder.setPositionConversionFactor(1);
-    driveEncoder.setVelocityConversionFactor((SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_METER * Math.PI)/(SWERVE_MODULE_CONSTANTS.GEAR_RATIO * 60 * 1000));
-    // driveEncoder.setVelocityConversionFactor(0.00001);
+    driveEncoder.setPositionConversionFactor((1.774 * SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_METER * Math.PI)/(SWERVE_MODULE_CONSTANTS.GEAR_RATIO * 42));
+    // driveEncoder.setPositionConversionFactor(1000);
+    driveEncoder.setVelocityConversionFactor((1.774 * SWERVE_MODULE_CONSTANTS.WHEEL_DIAMETER_METER * Math.PI)/(SWERVE_MODULE_CONSTANTS.GEAR_RATIO * 60));
+    // driveEncoder.setVelocityConversionFactor(1000);
 
     // Limit the PID Controller's input range between -pi and pi and set the input to be continuous
     turningPIDController.enableContinuousInput(-Math.PI, Math.PI);

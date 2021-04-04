@@ -32,7 +32,7 @@ public class DriveTrain extends SubsystemBase {
       DRIVE_TRAIN_CONSTANTS.FL_ANGLE_CURRENT_CHANNEL,
       DRIVE_TRAIN_CONSTANTS.FL_DRIVE_CURRENT_CHANNEL,
       false,
-      true);
+      false);
 
   private final SwerveModule frontRight =
     new SwerveModule(
@@ -41,7 +41,7 @@ public class DriveTrain extends SubsystemBase {
       DRIVE_TRAIN_CONSTANTS.FR_ANGLE_CURRENT_CHANNEL,
       DRIVE_TRAIN_CONSTANTS.FR_DRIVE_CURRENT_CHANNEL,
       false,
-      true);
+      false);
 
   private final SwerveModule backLeft = 
     new SwerveModule(
@@ -50,7 +50,7 @@ public class DriveTrain extends SubsystemBase {
       DRIVE_TRAIN_CONSTANTS.BL_ANGLE_CURRENT_CHANNEL,
       DRIVE_TRAIN_CONSTANTS.BL_DRIVE_CURRENT_CHANNEL,
       false,
-      false);
+      true);
 
   private final SwerveModule backRight =
     new SwerveModule(
@@ -59,7 +59,7 @@ public class DriveTrain extends SubsystemBase {
       DRIVE_TRAIN_CONSTANTS.BR_ANGLE_CURRENT_CHANNEL,
       DRIVE_TRAIN_CONSTANTS.BR_DRIVE_CURRENT_CHANNEL,
       false,
-      true);
+      false);
 
   // Define gyro sensor
   private final Gyro gyro = new ADXRS450_Gyro();
