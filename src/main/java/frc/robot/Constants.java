@@ -193,8 +193,8 @@ public final class Constants {
     }
 
     public static class PATHFINDER_CONSTANTS {
-        public static final double MAX_DRIVE_SPEED_MPS = 20;//DRIVE_TRAIN_CONSTANTS.MAX_DRIVE_SPEED_MPS;
-        public static final double MAX_DRIVE_ACCELERATION_MPS = 2;
+        public static final double MAX_DRIVE_SPEED_MPS = 100;//DRIVE_TRAIN_CONSTANTS.MAX_DRIVE_SPEED_MPS;
+        public static final double MAX_DRIVE_ACCELERATION_MPS = 10;
     }
 
     public static enum SIDE {

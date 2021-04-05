@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DRIVE_TRAIN_CONSTANTS;
+import frc.robot.Constants.PATHFINDER_CONSTANTS;
 import frc.robot.Constants.SWERVE_MODULE_CONSTANTS;
 import frc.robot.subsystems.DriveTrain;
 
@@ -43,8 +44,8 @@ public class PathweaverImport extends CommandBase {
     timer = new Timer();
     
     controller = new HolonomicDriveController(
-      new PIDController(0.5, 0, 0), new PIDController(0.5, 0, 0),
-      new ProfiledPIDController(0.5, 0, 0,
+      new PIDController(1, 0, 0), new PIDController(1, 0, 0),
+      new ProfiledPIDController(1, 0, 0,
         new TrapezoidProfile.Constraints(6.28, 3.14)));
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -56,7 +57,7 @@ public class PathweaverImport extends CommandBase {
     driveTrain.resetPosition();
     // Create config for trajectory
     config =
-        new TrajectoryConfig(SWERVE_MODULE_CONSTANTS.MAX_DRIVE_SPEED_MPS, SWERVE_MODULE_CONSTANTS.MAX_DRIVE_ACCELERATION_MPS);
+        new TrajectoryConfig(PATHFINDER_CONSTANTS.MAX_DRIVE_SPEED_MPS, PATHFINDER_CONSTANTS.MAX_DRIVE_ACCELERATION_MPS);
 
 
     // An example trajectory to follow.  All units in meters.

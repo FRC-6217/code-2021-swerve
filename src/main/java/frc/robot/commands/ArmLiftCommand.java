@@ -21,7 +21,7 @@ public class ArmLiftCommand extends CommandBase {
     this.state = state;
   }
 
-  // Called when the command is initially scheduled.
+  // Called when the command is initially scheduled.p
   @Override
   public void initialize() {
   }
