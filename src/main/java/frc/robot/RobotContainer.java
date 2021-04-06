@@ -84,8 +84,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
    new JoystickButton(joy, 1).whileHeld(new Align(driveTrain, joy, angle));
-    new JoystickButton(joy, 2).whenPressed(new PathweaverImport(driveTrain, "ToD5"));
-    // new JoystickButton(joy, 2).whenPressed(new ExampleTraj(driveTrain));
+    // new JoystickButton(joy, 2).whenPressed(new PathweaverImport(driveTrain, "ToD5"));
+    new JoystickButton(joy, 2).whenPressed(new ExampleTraj(driveTrain));
  
     //Xbox Joystick
   

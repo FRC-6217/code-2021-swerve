@@ -44,8 +44,8 @@ public class PathweaverImport extends CommandBase {
     timer = new Timer();
     
     controller = new HolonomicDriveController(
-      new PIDController(1, 0, 0), new PIDController(1, 0, 0),
-      new ProfiledPIDController(1, 0, 0,
+      new PIDController(0, 0, 0), new PIDController(0, 0, 0),
+      new ProfiledPIDController(0, 0, 0,
         new TrapezoidProfile.Constraints(6.28, 3.14)));
     // Use addRequirements() here to declare subsystem dependencies.
   }

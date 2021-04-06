@@ -1,9 +1,9 @@
 {
   "lengthUnit": "Meter",
   "exportUnit": "Always Meters",
-  "maxVelocity": 100.0,
-  "maxAcceleration": 10.0,
+  "maxVelocity": 1.0,
+  "maxAcceleration": 1.0,
   "wheelBase": 0.622,
   "gameName": "Barrel Racing Path",
-  "outputDir": ""
+  "outputDir": "../src/main/deploy/trajPaths/output"
 }

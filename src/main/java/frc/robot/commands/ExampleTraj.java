@@ -37,8 +37,8 @@ public class ExampleTraj extends CommandBase {
     timer = new Timer();
     
     controller = new HolonomicDriveController(
-      new PIDController(1, 0, 0), new PIDController(1, 0, 0),
-      new ProfiledPIDController(1, 0, 0,
+      new PIDController(0001, 0, 0), new PIDController(0001, 0, 0),
+      new ProfiledPIDController(0001, 0, 0,
         new TrapezoidProfile.Constraints(6.28, 3.14)));
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -47,6 +47,10 @@ public class ExampleTraj extends CommandBase {
   @Override
   public void initialize() {
     // Create config for trajectory
+    driveTrain.resetPosition();
+
+    driveTrain.zeroHeading();
+
     config =
         new TrajectoryConfig(PATHFINDER_CONSTANTS.MAX_DRIVE_SPEED_MPS, PATHFINDER_CONSTANTS.MAX_DRIVE_ACCELERATION_MPS);
 
@@ -56,12 +60,20 @@ public class ExampleTraj extends CommandBase {
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(
-            new Translation2d(2, 1),
-            new Translation2d(4, -1),
-            new Translation2d(8, 1)
+            new Translation2d(3.5, 0),
+            new Translation2d(3.5, -1),
+            new Translation2d(2, -1),
+            new Translation2d(2, 0),
+            new Translation2d(6, 0),
+            new Translation2d(6, 1.5),
+            new Translation2d(5, 1.5),
+            new Translation2d(5, 0),
+            new Translation2d(5, -1),
+            new Translation2d(7, -1),
+            new Translation2d(7, 0)
         ),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(5, 0, new Rotation2d(Math.PI)),
+        new Pose2d(0, 0, new Rotation2d(0)),
         config
     );
 
@@ -90,6 +102,6 @@ public class ExampleTraj extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() > 20;
+    return timer.get() > 100;
   }
 }
