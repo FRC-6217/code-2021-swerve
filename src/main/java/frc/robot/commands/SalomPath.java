@@ -24,14 +24,14 @@ import frc.robot.Constants.PATHFINDER_CONSTANTS;
 import frc.robot.Constants.SWERVE_MODULE_CONSTANTS;
 import frc.robot.subsystems.DriveTrain;
 
-public class ExampleTraj extends CommandBase {
+public class SalomPath extends CommandBase {
   private DriveTrain driveTrain;
   private Timer timer;
   private HolonomicDriveController controller;
   private TrajectoryConfig config;
   private Trajectory exampleTrajectory;
   /** Creates a new ExampleTraj. */
-  public ExampleTraj(DriveTrain driveTrain) {
+  public SalomPath(DriveTrain driveTrain) {
     addRequirements(driveTrain);
     this.driveTrain = driveTrain;
     timer = new Timer();
@@ -60,20 +60,19 @@ public class ExampleTraj extends CommandBase {
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(
-            new Translation2d(3.5, 0),
-            new Translation2d(3.5, -1.25),
-            new Translation2d(2, -1.25),
-            new Translation2d(2, 0),
-            new Translation2d(6, 0),
+            new Translation2d(1.2, 0),
+            new Translation2d(1.2, 1.5),
+            new Translation2d(5.5, 1.5),
+            new Translation2d(5.5, 0),
+            new Translation2d(7, 0),
+            new Translation2d(7, 1.5),
             new Translation2d(6, 1.5),
-            new Translation2d(4, 1.5),
-            new Translation2d(4, 0),
-            new Translation2d(5, -1.5),
-            new Translation2d(6.75, -1.75),
-            new Translation2d(7, -0.25)
+            new Translation2d(5.75, 0),
+            new Translation2d(1.5, 0),
+            new Translation2d(1.5, 1.1)
         ),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(-1, -0.75, new Rotation2d(0)),
+        new Pose2d(0, 1.1, new Rotation2d(0)),
         config
     );
 

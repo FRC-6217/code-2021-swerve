@@ -16,11 +16,13 @@ import frc.robot.Constants.STATE;
 import frc.robot.commands.Align;
 import frc.robot.commands.ArmLiftCommand;
 import frc.robot.commands.BallShooterCommand;
+import frc.robot.commands.BouncePath;
 import frc.robot.commands.ColorWheelCommand;
 import frc.robot.commands.ExampleTraj;
 import frc.robot.commands.JoyDrive;
 import frc.robot.commands.NotShooterIntakeCommand;
 import frc.robot.commands.PathweaverImport;
+import frc.robot.commands.SalomPath;
 import frc.robot.commands.ShooterIntakeCommand;
 import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.commands.WinchCommand;
@@ -85,7 +87,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
    new JoystickButton(joy, 1).whileHeld(new Align(driveTrain, joy, angle));
     // new JoystickButton(joy, 2).whenPressed(new PathweaverImport(driveTrain, "ToD5"));
-    new JoystickButton(joy, 2).whenPressed(new ExampleTraj(driveTrain));
+    new JoystickButton(joy, 2).whenPressed(new BouncePath(driveTrain));
  
     //Xbox Joystick
   
