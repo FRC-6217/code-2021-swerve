@@ -49,8 +49,6 @@ public class GalacticPath extends CommandBase {
     // Create config for trajectory
     driveTrain.resetPosition();
 
-    driveTrain.zeroHeading();
-
     config =
         new TrajectoryConfig(PATHFINDER_CONSTANTS.MAX_DRIVE_SPEED_MPS, PATHFINDER_CONSTANTS.MAX_DRIVE_ACCELERATION_MPS);
 
@@ -60,19 +58,21 @@ public class GalacticPath extends CommandBase {
         new Pose2d(0, 0, new Rotation2d(Math.PI)),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(
-            new Translation2d(-2, 0),
-            new Translation2d(-2, 2),
-            new Translation2d(5.4, 1.5),
-            new Translation2d(5.4, 0),
-            new Translation2d(7.25, 0),
-            new Translation2d(7.25, 1.5),
-            new Translation2d(6, 1.5),
-            new Translation2d(5.5, 0),
-            new Translation2d(1.45, 0),
-            new Translation2d(1.35, 1.1)
+            new Translation2d(7, 0),
+            new Translation2d(1, 0),
+            new Translation2d(1, 1.5),
+            new Translation2d(7, 1.5),
+            new Translation2d(1, 1.5),
+            new Translation2d(1, 3),
+            new Translation2d(7, 3),
+            new Translation2d(1, 3),
+            new Translation2d(1, 4.5),
+            new Translation2d(7, 4.5),
+            new Translation2d(1, 4.5),
+            new Translation2d(1, 6)
         ),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(0, 1.1, new Rotation2d(Math.PI)),
+        new Pose2d(-8, 6, new Rotation2d(Math.PI)),
         config
     );
 

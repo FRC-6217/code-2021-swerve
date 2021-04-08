@@ -21,7 +21,7 @@ public class GalacticSearch extends ParallelDeadlineGroup {
   public GalacticSearch(DriveTrain drive, NotShooterIntake nsi) {
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
-    super(new PathweaverImport(drive, "b"));
+    super(new GalacticPath(drive));
 
     addCommands(new NotShooterIntakeCommand(nsi, STATE.FORWARDS));
   }
