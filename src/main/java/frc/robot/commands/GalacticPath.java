@@ -58,18 +58,18 @@ public class GalacticPath extends CommandBase {
         new Pose2d(0, 0, new Rotation2d(Math.PI)),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(
-            new Translation2d(7, 0),
-            new Translation2d(1, 0),
-            new Translation2d(1, 1.5),
-            new Translation2d(7, 1.5),
-            new Translation2d(1, 1.5),
-            new Translation2d(1, 3),
-            new Translation2d(7, 3),
-            new Translation2d(1, 3),
-            new Translation2d(1, 4.5),
-            new Translation2d(7, 4.5),
-            new Translation2d(1, 4.5),
-            new Translation2d(1, 6)
+            new Translation2d(-7, 0),
+            new Translation2d(-1, 0),
+            new Translation2d(-1, 1.5),
+            new Translation2d(-7, 1.5),
+            new Translation2d(-1, 1.5),
+            new Translation2d(-1, 3),
+            new Translation2d(-7, 3),
+            new Translation2d(-1, 3),
+            new Translation2d(-1, 4.5),
+            new Translation2d(-7, 4.5),
+            new Translation2d(-1, 4.5),
+            new Translation2d(-1, 6)
         ),
         // End 3 meters straight ahead of where we started, facing forward
         new Pose2d(-8, 6, new Rotation2d(Math.PI)),
