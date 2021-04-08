@@ -23,9 +23,9 @@ public class ArmLift extends SubsystemBase {
   // Create pdp object for current sensing
   private PowerDistributionPanel pdp;
 
-  // Create objects for integrated encoders
-  private CANEncoder leftEnc;
-  private CANEncoder rightEnc;
+  // // Create objects for integrated encoders
+  // private CANEncoder leftEnc;
+  // private CANEncoder rightEnc;
 
   // Create objects for limit switches
   private CANDigitalInput upLeftLimit;
@@ -44,8 +44,8 @@ public class ArmLift extends SubsystemBase {
     pdp = new PowerDistributionPanel();
 
     // Instantiate integrated encoder objects
-    leftEnc = left.getEncoder();
-    rightEnc = right.getEncoder();
+    // leftEnc = left.getEncoder();
+    // rightEnc = right.getEncoder();
 
     // Instantiate limit switch objects
     upLeftLimit = left.getForwardLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
@@ -66,94 +66,94 @@ public class ArmLift extends SubsystemBase {
     right.setInverted(ARM_LIFT_CONSTANTS.IS_NEGATED_RIGHT);
 
     // Set conversion factors for encoders
-    leftEnc.setPositionConversionFactor(360); // Rotations to degrees
-    rightEnc.setPositionConversionFactor(360);
+    // leftEnc.setPositionConversionFactor(360); // Rotations to degrees
+    // rightEnc.setPositionConversionFactor(360);
 
-    leftEnc.setVelocityConversionFactor(6); // RPM to degrees per second
-    rightEnc.setVelocityConversionFactor(6);
+    // leftEnc.setVelocityConversionFactor(6); // RPM to degrees per second
+    // rightEnc.setVelocityConversionFactor(6);
     
   }
 
-  /* Encoder and current handling */
+  // /* Encoder and current handling */
   
-  /** Sets the position of the left encoder to 0 */
-  public void resetLeftEncoder(){
-    leftEnc.setPosition(0);
-  }
+  // /** Sets the position of the left encoder to 0 */
+  // public void resetLeftEncoder(){
+  //   leftEnc.setPosition(0);
+  // }
 
-  /** Sets the position of the right encoder to 0 */
-  public void resetRightEncoder(){
-    rightEnc.setPosition(0);
-  }
+  // /** Sets the position of the right encoder to 0 */
+  // public void resetRightEncoder(){
+  //   rightEnc.setPosition(0);
+  // }
 
-  /** Sets the position of the left and Right encoders to 0 */
-  public void resetEncoders(){
-    resetLeftEncoder();
-    resetRightEncoder();
-  }
+  // /** Sets the position of the left and Right encoders to 0 */
+  // public void resetEncoders(){
+  //   resetLeftEncoder();
+  //   resetRightEncoder();
+  // }
 
-  /**
-   * Returns the current draw of the left arm motor
-   * 
-   * @return The current draw of the left arm motor
-   */
-  public double getLeftCurrent(){
-    return pdp.getCurrent(ARM_LIFT_CONSTANTS.CURRENT_CHANNEL_LEFT);
-  }
+  // /**
+  //  * Returns the current draw of the left arm motor
+  //  * 
+  //  * @return The current draw of the left arm motor
+  //  */
+  // public double getLeftCurrent(){
+  //   return pdp.getCurrent(ARM_LIFT_CONSTANTS.CURRENT_CHANNEL_LEFT);
+  // }
 
-  /**
-   * Returns the current draw of the right arm motor
-   * 
-   * @return The current draw of the right arm motor
-   */
-  public double getRightCurrent(){
-    return pdp.getCurrent(ARM_LIFT_CONSTANTS.CURRENT_CHANNEL_RIGHT);
-  }
+  // /**
+  //  * Returns the current draw of the right arm motor
+  //  * 
+  //  * @return The current draw of the right arm motor
+  //  */
+  // public double getRightCurrent(){
+  //   return pdp.getCurrent(ARM_LIFT_CONSTANTS.CURRENT_CHANNEL_RIGHT);
+  // }
 
-  /**
-   * Returns the total current draw of both the left and right arm motors
-   * 
-   * @return The total current draw of both the left and right arm motors
-   */
-  public double getCurrent(){
-    return getLeftCurrent() + getRightCurrent();
-  }
+  // /**
+  //  * Returns the total current draw of both the left and right arm motors
+  //  * 
+  //  * @return The total current draw of both the left and right arm motors
+  //  */
+  // public double getCurrent(){
+  //   return getLeftCurrent() + getRightCurrent();
+  // }
 
-  /**
-   * Returns the angular position of the left arm motor in degrees
-   *  
-   * @return The angular position of the left arm motor in degrees
-   */
-  public double getLeftAngle(){
-    return leftEnc.getPosition();
-  }
+  // /**
+  //  * Returns the angular position of the left arm motor in degrees
+  //  *  
+  //  * @return The angular position of the left arm motor in degrees
+  //  */
+  // public double getLeftAngle(){
+  //   return leftEnc.getPosition();
+  // }
 
-  /**
-   * Returns the angular position of the right arm motor in degrees
-   *  
-   * @return The angular position of the right arm motor in degrees
-   */
-  public double getRightAngle(){
-    return rightEnc.getPosition();
-  }
+  // /**
+  //  * Returns the angular position of the right arm motor in degrees
+  //  *  
+  //  * @return The angular position of the right arm motor in degrees
+  //  */
+  // public double getRightAngle(){
+  //   return rightEnc.getPosition();
+  // }
 
-  /**
-   * Returns the angular velocity of the left arm motor in degrees per second
-   *  
-   * @return The angular velocity of the left arm motor in degrees per second
-   */
-  public double getLeftAngularVelocity(){
-    return leftEnc.getVelocity();
-  }
+  // /**
+  //  * Returns the angular velocity of the left arm motor in degrees per second
+  //  *  
+  //  * @return The angular velocity of the left arm motor in degrees per second
+  //  */
+  // public double getLeftAngularVelocity(){
+  //   return leftEnc.getVelocity();
+  // }
 
-  /**
-   * Returns the angular velocity of the right arm motor in degrees per second
-   *  
-   * @return The angular velocity of the right arm motor in degrees per second
-   */
-  public double getRightAngularVelocity(){
-    return rightEnc.getVelocity();
-  }
+  // /**
+  //  * Returns the angular velocity of the right arm motor in degrees per second
+  //  *  
+  //  * @return The angular velocity of the right arm motor in degrees per second
+  //  */
+  // public double getRightAngularVelocity(){
+  //   return rightEnc.getVelocity();
+  // }
 
   /* Limit switch handling */
 
@@ -248,15 +248,15 @@ public class ArmLift extends SubsystemBase {
   public void periodic() {
     // Print all ArmLift sensor readings if debug is enabled
     if(ARM_LIFT_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
-      SmartDashboard.putNumber("Left Current Draw", getLeftCurrent());
-      SmartDashboard.putNumber("Right Current Draw", getRightCurrent());
-      SmartDashboard.putNumber("Arm Total Current Draw", getCurrent());
+      // SmartDashboard.putNumber("Left Current Draw", getLeftCurrent());
+      // SmartDashboard.putNumber("Right Current Draw", getRightCurrent());
+      // SmartDashboard.putNumber("Arm Total Current Draw", getCurrent());
 
-      SmartDashboard.putNumber("Left Angle", getLeftAngle());
-      SmartDashboard.putNumber("Right Angle", getRightAngle());
+      // SmartDashboard.putNumber("Left Angle", getLeftAngle());
+      // SmartDashboard.putNumber("Right Angle", getRightAngle());
 
-      SmartDashboard.putNumber("Left Angular Velocity", getLeftAngularVelocity());
-      SmartDashboard.putNumber("Right Angular Velocity", getRightAngularVelocity());
+      // SmartDashboard.putNumber("Left Angular Velocity", getLeftAngularVelocity());
+      // SmartDashboard.putNumber("Right Angular Velocity", getRightAngularVelocity());
 
       SmartDashboard.putBoolean("Left Up Limit", getLeftUpLimit());
       SmartDashboard.putBoolean("Right Up Limit", getRightUpLimit());
