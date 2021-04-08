@@ -62,15 +62,15 @@ public class BouncePath extends CommandBase {
         List.of(
             new Translation2d(1, 0.25),
             new Translation2d(1, 1.5),
-            new Translation2d(1.25, 0.25),
+            new Translation2d(1.25, 0.5),
             new Translation2d(2, 0),
             new Translation2d(2, -1.75),
-            new Translation2d(3.5, -1.75),
-            new Translation2d(3.5, 1.5),
-            new Translation2d(3.5, -1.75),
-            new Translation2d(7, -1.75),
-            new Translation2d(7, 1.5),
-            new Translation2d(7, 0)
+            new Translation2d(3.25, -1.75),
+            new Translation2d(3.75, 1.5),
+            new Translation2d(3.75, -1.75),
+            new Translation2d(5.5, -1.75),
+            new Translation2d(6, 1.5),
+            new Translation2d(6.25, 0)
 
         ),
         // End 3 meters straight ahead of where we started, facing forward
