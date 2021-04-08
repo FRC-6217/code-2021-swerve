@@ -26,6 +26,7 @@ import frc.robot.commands.SalomPath;
 import frc.robot.commands.ShooterIntakeCommand;
 import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.commands.WinchCommand;
+import frc.robot.commands.autoCommand.GalacticSearch;
 import frc.robot.commands.autoCommand.Test;
 import frc.robot.libraries.Angle;
 import frc.robot.libraries.Distance;
@@ -87,7 +88,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
    new JoystickButton(joy, 1).whileHeld(new Align(driveTrain, joy, angle));
     // new JoystickButton(joy, 2).whenPressed(new PathweaverImport(driveTrain, "ToD5"));
-    new JoystickButton(joy, 2).whenPressed(new BouncePath(driveTrain));
+    new JoystickButton(joy, 2).whenPressed(new SalomPath(driveTrain));
  
     //Xbox Joystick
   
@@ -129,7 +130,7 @@ public class RobotContainer {
     // fake.setLeftShift(.9);
     // return new Test(DriveTrain, fake);
   
-    return null;
+    return new GalacticSearch(driveTrain, notShooterIntake);
     
     // An ExampleCommand will run in autonomous
   //  return new AutoWeekZero(ballShooter, shooterIntake);

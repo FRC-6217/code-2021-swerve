@@ -60,16 +60,16 @@ public class SalomPath extends CommandBase {
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(
-            new Translation2d(1.2, 0),
-            new Translation2d(1.2, 1.5),
-            new Translation2d(5.5, 1.5),
-            new Translation2d(5.5, 0),
-            new Translation2d(7, 0),
-            new Translation2d(7, 1.5),
+            new Translation2d(1.25, 0),
+            new Translation2d(1.4, 1.5),
+            new Translation2d(5.4, 1.5),
+            new Translation2d(5.4, 0),
+            new Translation2d(7.25, 0),
+            new Translation2d(7.25, 1.5),
             new Translation2d(6, 1.5),
-            new Translation2d(5.75, 0),
-            new Translation2d(1.5, 0),
-            new Translation2d(1.5, 1.1)
+            new Translation2d(5.5, 0),
+            new Translation2d(1.45, 0),
+            new Translation2d(1.35, 1.1)
         ),
         // End 3 meters straight ahead of where we started, facing forward
         new Pose2d(0, 1.1, new Rotation2d(0)),

@@ -61,7 +61,7 @@ public class PathweaverImport extends CommandBase {
 
 
     // An example trajectory to follow.  All units in meters.
-    String trajectoryJSON = "trajPaths/output/ToD5.wpilib.json";
+    String trajectoryJSON = "trajPaths/output/output/Galactic_Search.wpilib.json";
     exampleTrajectory = new Trajectory();
     try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
@@ -81,7 +81,7 @@ public class PathweaverImport extends CommandBase {
   public void execute() {
     
     Trajectory.State goal = exampleTrajectory.sample(timer.get());
-    ChassisSpeeds adjustedSpeeds = controller.calculate(driveTrain.getPose(), goal, Rotation2d.fromDegrees(0));
+    ChassisSpeeds adjustedSpeeds = controller.calculate(driveTrain.getPose(), goal, Rotation2d.fromDegrees(0);
 
     driveTrain.setModuleStates(DRIVE_TRAIN_CONSTANTS.DRIVE_KINEMATICS.toSwerveModuleStates(adjustedSpeeds));
     // driveTrain.drive(.1, 0, 0, true);

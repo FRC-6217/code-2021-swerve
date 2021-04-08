@@ -24,14 +24,14 @@ import frc.robot.Constants.PATHFINDER_CONSTANTS;
 import frc.robot.Constants.SWERVE_MODULE_CONSTANTS;
 import frc.robot.subsystems.DriveTrain;
 
-public class BouncePath extends CommandBase {
+public class GalacticPath extends CommandBase {
   private DriveTrain driveTrain;
   private Timer timer;
   private HolonomicDriveController controller;
   private TrajectoryConfig config;
   private Trajectory exampleTrajectory;
   /** Creates a new ExampleTraj. */
-  public BouncePath(DriveTrain driveTrain) {
+  public GalacticPath(DriveTrain driveTrain) {
     addRequirements(driveTrain);
     this.driveTrain = driveTrain;
     timer = new Timer();
@@ -57,24 +57,22 @@ public class BouncePath extends CommandBase {
     // An example trajectory to follow.  All units in meters.
     exampleTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
+        new Pose2d(0, 0, new Rotation2d(Math.PI)),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(
-            new Translation2d(1, 0.25),
-            new Translation2d(1, 1.5),
-            new Translation2d(1.25, 0.5),
-            new Translation2d(1.75, 0),
-            new Translation2d(1.75, -1.75),
-            new Translation2d(3.25, -1.75),
-            new Translation2d(3.75, 1.5),
-            new Translation2d(3.75, -1.75),
-            new Translation2d(5.5, -1.75),
+            new Translation2d(-2, 0),
+            new Translation2d(-2, 2),
+            new Translation2d(5.4, 1.5),
+            new Translation2d(5.4, 0),
+            new Translation2d(7.25, 0),
+            new Translation2d(7.25, 1.5),
             new Translation2d(6, 1.5),
-            new Translation2d(6.25, 0.25)
-
+            new Translation2d(5.5, 0),
+            new Translation2d(1.45, 0),
+            new Translation2d(1.35, 1.1)
         ),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(8, 0.25, new Rotation2d(0)),
+        new Pose2d(0, 1.1, new Rotation2d(Math.PI)),
         config
     );
 
