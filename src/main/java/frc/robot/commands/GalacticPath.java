@@ -76,7 +76,7 @@ public class GalacticPath extends CommandBase {
         config
     );
 
-    driveTrain.resetOdometry(exampleTrajectory.getInitialPose());
+    // driveTrain.resetOdometry(exampleTrajectory.getInitialPose());
     timer.reset();
     timer.start();
     
