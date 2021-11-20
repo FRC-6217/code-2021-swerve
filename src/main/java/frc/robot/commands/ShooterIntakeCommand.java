@@ -14,11 +14,13 @@ import frc.robot.subsystems.ShooterIntake;
 public class ShooterIntakeCommand extends CommandBase {
   ShooterIntake intake;
   STATE state;
+  boolean end;
   
-  public ShooterIntakeCommand(ShooterIntake intake, STATE state) {
+  public ShooterIntakeCommand(ShooterIntake intake, STATE state, boolean end) {
     addRequirements(intake);
     this.intake = intake;
     this.state = state;
+    this.end = end;
   }
 
   // Called when the command is initially scheduled.
@@ -51,12 +53,14 @@ public class ShooterIntakeCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.off();
+    if(!this.end){
+      intake.off();
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return end;
   }
 }

@@ -15,16 +15,18 @@ public class ShooterIntake extends SubsystemBase {
   private VictorSPX motor;
 
   // Create pdp object
+  /*
   private PowerDistributionPanel pdp;
-  
+  */
   /** Creates a new ShooterIntake */
   public ShooterIntake() {
     // Instantiate motor controller object
     motor = new VictorSPX(SHOOTER_INTAKE_CONSTANTS.MOTOR_CONTROLLER_ID);
 
     // Instantiate pdp object
+    /*
     pdp = new PowerDistributionPanel();
-
+*/
     // Invert motor direction as needed
     motor.setInverted(SHOOTER_INTAKE_CONSTANTS.IS_NEGATED);
     
@@ -35,10 +37,11 @@ public class ShooterIntake extends SubsystemBase {
    * 
    * @return The current draw of the motor in amps
    */
+  /*
   public double getCurrent(){
     return pdp.getCurrent(SHOOTER_INTAKE_CONSTANTS.CURRENT_CHANNEL);
   }
-
+*/
   /** Activates the motor to intake from the chamber */
   public void intake() {
     motor.set(ControlMode.PercentOutput, SHOOTER_INTAKE_CONSTANTS.SPEED);
@@ -59,7 +62,7 @@ public class ShooterIntake extends SubsystemBase {
   public void periodic() {
     // Print all ShooterIntake sensor readings if debug is enabled
     if(SHOOTER_INTAKE_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
-      SmartDashboard.putNumber("Shooter Intake Current Draw", getCurrent());
+      // SmartDashboard.putNumber("Shooter Intake Current Draw", getCurrent());
     }
   }
 }

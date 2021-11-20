@@ -18,8 +18,9 @@ public class NotShooterIntake extends SubsystemBase {
   private CANSparkMax motor;
 
   // Create pdp object
+  /*
   private PowerDistributionPanel pdp;
-
+*/
   // Create integrated encoder object
   private CANEncoder enc;
 
@@ -29,8 +30,9 @@ public class NotShooterIntake extends SubsystemBase {
     motor = new CANSparkMax(NOT_SHOOTER_INTAKE_CONSTANTS.MOTOR_CONTROLLER_ID, MotorType.kBrushless);
       
     // Instantiate pdp object
+    /*
     pdp = new PowerDistributionPanel();
-
+*/
     // Instantiate integrated encoder
     enc = motor.getEncoder();
 
@@ -52,10 +54,11 @@ public class NotShooterIntake extends SubsystemBase {
    * 
    * @return The current draw of the motor in amps
    */
+  /*
   public double getCurrent(){
     return pdp.getCurrent(SHOOTER_INTAKE_CONSTANTS.CURRENT_CHANNEL);
   }
-
+*/
   /**
    * Returns the angular position of the not intake system
    * 
@@ -94,7 +97,7 @@ public class NotShooterIntake extends SubsystemBase {
   public void periodic() {
     // Print all NotShooterIntake sensor readings if debug is enabled
     if(NOT_SHOOTER_INTAKE_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
-      SmartDashboard.putNumber("Not Shooter Intake Current Draw", getCurrent());
+      // SmartDashboard.putNumber("Not Shooter Intake Current Draw", getCurrent());
       SmartDashboard.putNumber("Not Shooter Intake Position", getRotations());
       SmartDashboard.putNumber("Not Shooter Intake Velocity", getRPM());
     }

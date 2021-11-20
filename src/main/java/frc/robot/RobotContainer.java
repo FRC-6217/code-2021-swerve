@@ -26,6 +26,7 @@ import frc.robot.commands.SalomPath;
 import frc.robot.commands.ShooterIntakeCommand;
 import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.commands.WinchCommand;
+import frc.robot.commands.autoCommand.AutoWeekZero;
 import frc.robot.commands.autoCommand.GalacticSearch;
 import frc.robot.commands.autoCommand.Test;
 import frc.robot.libraries.Angle;
@@ -92,9 +93,9 @@ public class RobotContainer {
  
     //Xbox Joystick
   
-    new JoystickTrigger(xbox, 3).whileHeld(new ShooterIntakeCommand(shooterIntake, STATE.FORWARDS));
-    new JoystickButton(xbox, Button.kBumperLeft.value).whileHeld(new ArmLiftCommand(armLift, STATE.UP));
-    new JoystickTrigger(xbox, 2).whileHeld(new ArmLiftCommand(armLift, STATE.DOWN));
+    new JoystickTrigger(xbox, 3).whileHeld(new ShooterIntakeCommand(shooterIntake, STATE.FORWARDS, false));
+    new JoystickButton(xbox, Button.kBumperLeft.value).whileHeld(new ArmLiftCommand(armLift, STATE.UP, false));
+    new JoystickTrigger(xbox, 2).whileHeld(new ArmLiftCommand(armLift, STATE.DOWN, false));
     new JoystickButton(xbox, Button.kBumperRight.value).toggleWhenPressed(new BallShooterCommand(ballShooter, true, 2500, 2500));
     new JoystickButton(joy, 8).whenPressed(new ShooterSetSpeed(1250, 3500));
     new JoystickButton(joy, 7).whenPressed(new ShooterSetSpeed(2500, 2500));
@@ -104,7 +105,7 @@ public class RobotContainer {
     new JoystickButton(xbox, Button.kX.value).whileHeld(new WinchCommand(winch, STATE.DOWN));
     new JoystickButton(xbox, Button.kA.value).whileHeld(new NotShooterIntakeCommand(notShooterIntake, STATE.FORWARDS));
     new JoystickButton(xbox, Button.kB.value).whileHeld(new NotShooterIntakeCommand(notShooterIntake, STATE.REVERSE));
-    new JoystickButton(xbox, Button.kStickRight.value).whileHeld(new ColorWheelCommand(colorWheel));
+    new JoystickButton(xbox, Button.kStickRight.value).whenPressed(new ColorWheelCommand(colorWheel));
 
     // arm hn
     /*
@@ -130,7 +131,7 @@ public class RobotContainer {
     // fake.setLeftShift(.9);
     // return new Test(DriveTrain, fake);
   
-    return new GalacticSearch(driveTrain, notShooterIntake);
+    return new AutoWeekZero(ballShooter, shooterIntake, armLift, driveTrain);
     
     // An ExampleCommand will run in autonomous
   //  return new AutoWeekZero(ballShooter, shooterIntake);

@@ -14,11 +14,13 @@ import frc.robot.subsystems.ArmLift;
 public class ArmLiftCommand extends CommandBase {
   ArmLift arm;
   STATE state;
+  boolean end;
   
-  public ArmLiftCommand(ArmLift arm, STATE state) {
+  public ArmLiftCommand(ArmLift arm, STATE state, boolean end) {
     addRequirements(arm);
     this.arm = arm;
     this.state = state;
+    this.end = end;
   }
 
   // Called when the command is initially scheduled.p
@@ -52,7 +54,9 @@ public class ArmLiftCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.offMotor();
+    if(!end){
+      arm.offMotor();
+    }
   }
 
   // Returns true when the command should end.
@@ -71,6 +75,6 @@ public class ArmLiftCommand extends CommandBase {
     //   return false;
     // }
 
-    return false;
+    return end;
   }
 }

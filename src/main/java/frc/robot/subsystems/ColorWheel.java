@@ -21,8 +21,9 @@ public class ColorWheel extends SubsystemBase {
   private CANSparkMax motor;
 
   // Create pdp object
+  /*
   private PowerDistributionPanel pdp;
-
+*/
   // Create integrated encoder object
   private CANEncoder enc;
 
@@ -44,8 +45,9 @@ public class ColorWheel extends SubsystemBase {
     motor = new CANSparkMax(COLOR_WHEEL_CONSTANTS.MOTOR_CONTROLLER_ID, MotorType.kBrushless);
 
     // Instantiate pdp object
+    /*
     pdp = new PowerDistributionPanel();
-
+*/
     // Instantiate integrated encoder
     enc = motor.getEncoder();
     
@@ -85,9 +87,11 @@ public class ColorWheel extends SubsystemBase {
    * 
    * @return The current draw of the motor in amps
    */
+  /*
   public double getCurrent(){
+    
     return pdp.getCurrent(COLOR_WHEEL_CONSTANTS.CURRENT_CHANNEL);
-  }
+  }*/
 
   /**
    * Returns the angular position of motor in rotations
@@ -199,7 +203,7 @@ public class ColorWheel extends SubsystemBase {
   public void periodic() {
     // Print all ColorWheel sensor readings if debug is enabled
     if(COLOR_WHEEL_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
-      SmartDashboard.putNumber("Color Wheel Current Draw", getCurrent());
+      //SmartDashboard.putNumber("Color Wheel Current Draw", getCurrent());
       SmartDashboard.putNumber("Color Wheel Rotations", getRotations());
       SmartDashboard.putNumber("Color Wheel RPM", getRPM());
 

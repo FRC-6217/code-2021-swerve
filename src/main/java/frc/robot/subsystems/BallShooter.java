@@ -23,10 +23,10 @@ public class BallShooter extends SubsystemBase {
   // Create objects for integrated encoders
   private CANEncoder topEnc;
   private CANEncoder bottomEnc;
-
+/*
   // Create object for pdp
   private PowerDistributionPanel pdp;
-
+*/
   //Create objects for PID controllers
   private CANPIDController topPID;
   private CANPIDController bottomPID;
@@ -48,8 +48,9 @@ public class BallShooter extends SubsystemBase {
     topSpeed = 0;
     bottomSpeed = 0;
     // Instantiate pdp
+    /*
     pdp = new PowerDistributionPanel();
-
+*/
     // Fetch PID controllers from motor controllers
     topPID = top.getPIDController();
     bottomPID = bottom.getPIDController();
@@ -116,29 +117,30 @@ public class BallShooter extends SubsystemBase {
    * Returns the current draw of the top motor
    * 
    * @return The current draw of the top motor
-   */
+   *//*
   public double getTopCurrent(){
     return pdp.getCurrent(BALL_SHOOTER_CONSTANTS.CURRENT_CHANNEL_TOP);
-  }
+  }*/
 
   /**
    * Returns the current draw of the bottom motor in amps
    * 
    * @return The current draw of the bottom motor in amps
-   */
+   *//*
   public double getBottomCurrent(){
     return pdp.getCurrent(BALL_SHOOTER_CONSTANTS.CURRENT_CHANNEL_BOTTOM);
-  }
+  }*/
 
   /**
    * Returns the total current draw of both the top and bottom motors
    * 
    * @return The total current draw of both the top and bottom motors
    */
+  /*
   public double getCurrent(){
     return getTopCurrent() + getBottomCurrent();
   }
-
+*/
   /**
    * Returns the angular position of the top motor in rotations
    *  
@@ -286,16 +288,16 @@ public class BallShooter extends SubsystemBase {
   public void periodic() {
     // Print all BallShooter sensor readings if debug is enabled
     if(BALL_SHOOTER_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
-      SmartDashboard.putNumber("Top Current Draw", getTopCurrent());
+      /*SmartDashboard.putNumber("Top Current Draw", getTopCurrent());
       SmartDashboard.putNumber("Bottom Current Draw", getBottomCurrent());
       SmartDashboard.putNumber("Shooter Total Current Draw", getCurrent());
-
+*/
       SmartDashboard.putNumber("Top Rotations", getTopRotations());
       SmartDashboard.putNumber("Bottom Rotations", getBottomRotations());
 
       SmartDashboard.putNumber("Top RPM", getTopRPM());
       SmartDashboard.putNumber("Bottom RPM", getBottomRPM());
-    }
+    }/*
 
     //Fetch and update PID values if tuning enabled
     if(BALL_SHOOTER_CONSTANTS.ENABLE_TUNING){
@@ -307,6 +309,6 @@ public class BallShooter extends SubsystemBase {
       setIZone(SmartDashboard.getNumber("Shooter IZone", BALL_SHOOTER_CONSTANTS.IZONE));
       setPIDOutputRange(SmartDashboard.getNumber("Shooter Min Out", BALL_SHOOTER_CONSTANTS.MIN_OUT),
                         SmartDashboard.getNumber("Shooter Max Out", BALL_SHOOTER_CONSTANTS.MAX_OUT));
-    }
+    }*/
   }
 }

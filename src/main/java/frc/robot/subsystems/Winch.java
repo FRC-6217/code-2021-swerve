@@ -17,8 +17,9 @@ public class Winch extends SubsystemBase {
   private CANSparkMax motor;
 
   // Create pdp object
+  /*
   private PowerDistributionPanel pdp;
-
+*/
   // Create integrated encoder object
   private CANEncoder enc;
 
@@ -27,9 +28,10 @@ public class Winch extends SubsystemBase {
     // Instantiate motor controller object
     motor = new CANSparkMax(WINCH_CONSTANTS.MOTOR_CONTROLLER_ID, MotorType.kBrushless);
     
-    // Instantiate pdp object
+    // Instantiate pdp object 
+    /*
     pdp = new PowerDistributionPanel();
-
+*/
     // Instantiate integrated encoder
     enc = motor.getEncoder();
 
@@ -55,9 +57,10 @@ public class Winch extends SubsystemBase {
    * 
    * @return The current draw of the motor in amps
    */
+  /*
   public double getCurrent(){
     return pdp.getCurrent(WINCH_CONSTANTS.CURRENT_CHANNEL);
-  }
+  }*/
 
   /**
    * Returns the position of the winch
@@ -97,7 +100,7 @@ public class Winch extends SubsystemBase {
   public void periodic() {
     // Print all Winch sensor readings if debug is enabled
     if(WINCH_CONSTANTS.DEBUG || Constants.GLOBAL_DEBUG){
-      SmartDashboard.putNumber("Winch Current Draw", getCurrent());
+      // SmartDashboard.putNumber("Winch Current Draw", getCurrent());
       SmartDashboard.putNumber("Winch Position", getRotations());
       SmartDashboard.putNumber("Winch Velocity", getRPM());
     }
